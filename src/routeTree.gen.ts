@@ -15,6 +15,11 @@ import { Route as WalletRouteImport } from './routes/_wallet'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
 import { Route as WalletWalletRouteImport } from './routes/_wallet.wallet'
+import { Route as WalletOnboardingSuccessRouteImport } from './routes/_wallet.onboarding.success'
+import { Route as WalletOnboardingStartRouteImport } from './routes/_wallet.onboarding.start'
+import { Route as WalletOnboardingReviewRouteImport } from './routes/_wallet.onboarding.review'
+import { Route as WalletOnboardingLivenessRouteImport } from './routes/_wallet.onboarding.liveness'
+import { Route as WalletOnboardingIdentityRouteImport } from './routes/_wallet.onboarding.identity'
 import { Route as WalletWalletCredentialIdRouteImport } from './routes/_wallet.wallet.credential.$id'
 
 const RegisterRoute = RegisterRouteImport.update({
@@ -46,6 +51,33 @@ const WalletWalletRoute = WalletWalletRouteImport.update({
   path: '/wallet',
   getParentRoute: () => WalletRoute,
 } as any)
+const WalletOnboardingSuccessRoute = WalletOnboardingSuccessRouteImport.update({
+  id: '/onboarding/success',
+  path: '/onboarding/success',
+  getParentRoute: () => WalletRoute,
+} as any)
+const WalletOnboardingStartRoute = WalletOnboardingStartRouteImport.update({
+  id: '/onboarding/start',
+  path: '/onboarding/start',
+  getParentRoute: () => WalletRoute,
+} as any)
+const WalletOnboardingReviewRoute = WalletOnboardingReviewRouteImport.update({
+  id: '/onboarding/review',
+  path: '/onboarding/review',
+  getParentRoute: () => WalletRoute,
+} as any)
+const WalletOnboardingLivenessRoute =
+  WalletOnboardingLivenessRouteImport.update({
+    id: '/onboarding/liveness',
+    path: '/onboarding/liveness',
+    getParentRoute: () => WalletRoute,
+  } as any)
+const WalletOnboardingIdentityRoute =
+  WalletOnboardingIdentityRouteImport.update({
+    id: '/onboarding/identity',
+    path: '/onboarding/identity',
+    getParentRoute: () => WalletRoute,
+  } as any)
 const WalletWalletCredentialIdRoute =
   WalletWalletCredentialIdRouteImport.update({
     id: '/credential/$id',
@@ -59,6 +91,11 @@ export interface FileRoutesByFullPath {
   '/register': typeof RegisterRoute
   '/wallet': typeof WalletWalletRouteWithChildren
   '/admin/login': typeof AdminLoginRoute
+  '/onboarding/identity': typeof WalletOnboardingIdentityRoute
+  '/onboarding/liveness': typeof WalletOnboardingLivenessRoute
+  '/onboarding/review': typeof WalletOnboardingReviewRoute
+  '/onboarding/start': typeof WalletOnboardingStartRoute
+  '/onboarding/success': typeof WalletOnboardingSuccessRoute
   '/wallet/credential/$id': typeof WalletWalletCredentialIdRoute
 }
 export interface FileRoutesByTo {
@@ -67,6 +104,11 @@ export interface FileRoutesByTo {
   '/register': typeof RegisterRoute
   '/wallet': typeof WalletWalletRouteWithChildren
   '/admin/login': typeof AdminLoginRoute
+  '/onboarding/identity': typeof WalletOnboardingIdentityRoute
+  '/onboarding/liveness': typeof WalletOnboardingLivenessRoute
+  '/onboarding/review': typeof WalletOnboardingReviewRoute
+  '/onboarding/start': typeof WalletOnboardingStartRoute
+  '/onboarding/success': typeof WalletOnboardingSuccessRoute
   '/wallet/credential/$id': typeof WalletWalletCredentialIdRoute
 }
 export interface FileRoutesById {
@@ -77,6 +119,11 @@ export interface FileRoutesById {
   '/register': typeof RegisterRoute
   '/_wallet/wallet': typeof WalletWalletRouteWithChildren
   '/admin/login': typeof AdminLoginRoute
+  '/_wallet/onboarding/identity': typeof WalletOnboardingIdentityRoute
+  '/_wallet/onboarding/liveness': typeof WalletOnboardingLivenessRoute
+  '/_wallet/onboarding/review': typeof WalletOnboardingReviewRoute
+  '/_wallet/onboarding/start': typeof WalletOnboardingStartRoute
+  '/_wallet/onboarding/success': typeof WalletOnboardingSuccessRoute
   '/_wallet/wallet/credential/$id': typeof WalletWalletCredentialIdRoute
 }
 export interface FileRouteTypes {
@@ -87,6 +134,11 @@ export interface FileRouteTypes {
     | '/register'
     | '/wallet'
     | '/admin/login'
+    | '/onboarding/identity'
+    | '/onboarding/liveness'
+    | '/onboarding/review'
+    | '/onboarding/start'
+    | '/onboarding/success'
     | '/wallet/credential/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -95,6 +147,11 @@ export interface FileRouteTypes {
     | '/register'
     | '/wallet'
     | '/admin/login'
+    | '/onboarding/identity'
+    | '/onboarding/liveness'
+    | '/onboarding/review'
+    | '/onboarding/start'
+    | '/onboarding/success'
     | '/wallet/credential/$id'
   id:
     | '__root__'
@@ -104,6 +161,11 @@ export interface FileRouteTypes {
     | '/register'
     | '/_wallet/wallet'
     | '/admin/login'
+    | '/_wallet/onboarding/identity'
+    | '/_wallet/onboarding/liveness'
+    | '/_wallet/onboarding/review'
+    | '/_wallet/onboarding/start'
+    | '/_wallet/onboarding/success'
     | '/_wallet/wallet/credential/$id'
   fileRoutesById: FileRoutesById
 }
@@ -159,6 +221,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WalletWalletRouteImport
       parentRoute: typeof WalletRoute
     }
+    '/_wallet/onboarding/success': {
+      id: '/_wallet/onboarding/success'
+      path: '/onboarding/success'
+      fullPath: '/onboarding/success'
+      preLoaderRoute: typeof WalletOnboardingSuccessRouteImport
+      parentRoute: typeof WalletRoute
+    }
+    '/_wallet/onboarding/start': {
+      id: '/_wallet/onboarding/start'
+      path: '/onboarding/start'
+      fullPath: '/onboarding/start'
+      preLoaderRoute: typeof WalletOnboardingStartRouteImport
+      parentRoute: typeof WalletRoute
+    }
+    '/_wallet/onboarding/review': {
+      id: '/_wallet/onboarding/review'
+      path: '/onboarding/review'
+      fullPath: '/onboarding/review'
+      preLoaderRoute: typeof WalletOnboardingReviewRouteImport
+      parentRoute: typeof WalletRoute
+    }
+    '/_wallet/onboarding/liveness': {
+      id: '/_wallet/onboarding/liveness'
+      path: '/onboarding/liveness'
+      fullPath: '/onboarding/liveness'
+      preLoaderRoute: typeof WalletOnboardingLivenessRouteImport
+      parentRoute: typeof WalletRoute
+    }
+    '/_wallet/onboarding/identity': {
+      id: '/_wallet/onboarding/identity'
+      path: '/onboarding/identity'
+      fullPath: '/onboarding/identity'
+      preLoaderRoute: typeof WalletOnboardingIdentityRouteImport
+      parentRoute: typeof WalletRoute
+    }
     '/_wallet/wallet/credential/$id': {
       id: '/_wallet/wallet/credential/$id'
       path: '/credential/$id'
@@ -183,10 +280,20 @@ const WalletWalletRouteWithChildren = WalletWalletRoute._addFileChildren(
 
 interface WalletRouteChildren {
   WalletWalletRoute: typeof WalletWalletRouteWithChildren
+  WalletOnboardingIdentityRoute: typeof WalletOnboardingIdentityRoute
+  WalletOnboardingLivenessRoute: typeof WalletOnboardingLivenessRoute
+  WalletOnboardingReviewRoute: typeof WalletOnboardingReviewRoute
+  WalletOnboardingStartRoute: typeof WalletOnboardingStartRoute
+  WalletOnboardingSuccessRoute: typeof WalletOnboardingSuccessRoute
 }
 
 const WalletRouteChildren: WalletRouteChildren = {
   WalletWalletRoute: WalletWalletRouteWithChildren,
+  WalletOnboardingIdentityRoute: WalletOnboardingIdentityRoute,
+  WalletOnboardingLivenessRoute: WalletOnboardingLivenessRoute,
+  WalletOnboardingReviewRoute: WalletOnboardingReviewRoute,
+  WalletOnboardingStartRoute: WalletOnboardingStartRoute,
+  WalletOnboardingSuccessRoute: WalletOnboardingSuccessRoute,
 }
 
 const WalletRouteWithChildren =

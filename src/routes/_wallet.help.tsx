@@ -1,6 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import {
-  Accordion, AccordionContent, AccordionItem, AccordionTrigger,
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
 } from "@/components/ui/accordion";
 import { WalletPageHeader } from "./_wallet";
 import { Button } from "@/components/ui/button";
@@ -15,10 +18,22 @@ export const Route = createFileRoute("/_wallet/help")({
 });
 
 const faqs = [
-  { q: "Is my data stored on Zenetrix servers?", a: "Verifiable credentials live on your device. Zenetrix only stores cryptographic proofs needed for revocation and audit." },
-  { q: "What happens if I lose my phone?", a: "Sign in on a new device with OTP and recover your wallet from the encrypted backup. Old device access is revoked automatically." },
-  { q: "How long is a consent valid?", a: "Each request defines its own duration — usually 7 to 30 days. You can revoke any active consent at any time." },
-  { q: "Will partners see my Aadhaar number?", a: "Only the last 4 digits unless explicitly required by regulation. We share zero-knowledge proofs whenever possible." },
+  {
+    q: "Is my data stored on Zenetrix servers?",
+    a: "Verifiable credentials live on your device. Zenetrix only stores cryptographic proofs needed for revocation and audit.",
+  },
+  {
+    q: "What happens if I lose my phone?",
+    a: "Sign in on a new device with OTP and recover your wallet from the encrypted backup. Old device access is revoked automatically.",
+  },
+  {
+    q: "How long is a consent valid?",
+    a: "Each request defines its own duration — usually 7 to 30 days. You can revoke any active consent at any time.",
+  },
+  {
+    q: "Will partners see my Aadhaar number?",
+    a: "Only the last 4 digits unless explicitly required by regulation. We share zero-knowledge proofs whenever possible.",
+  },
 ];
 
 function HelpPage() {
@@ -27,7 +42,11 @@ function HelpPage() {
       <WalletPageHeader title="Help & support" subtitle="Common questions and contact us." />
 
       <div className="px-5">
-        <Accordion type="single" collapsible className="overflow-hidden rounded-2xl border bg-card shadow-card">
+        <Accordion
+          type="single"
+          collapsible
+          className="overflow-hidden rounded-2xl border bg-card shadow-card"
+        >
           {faqs.map((f, i) => (
             <AccordionItem key={i} value={String(i)} className="border-b last:border-0">
               <AccordionTrigger className="px-4 text-left text-sm font-medium hover:no-underline">
@@ -50,7 +69,9 @@ function HelpPage() {
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              toast.success("Message sent", { description: "We'll get back to you within 24 hours." });
+              toast.success("Message sent", {
+                description: "We'll get back to you within 24 hours.",
+              });
               (e.target as HTMLFormElement).reset();
             }}
             className="mt-4 space-y-3"
@@ -63,7 +84,9 @@ function HelpPage() {
               <Label htmlFor="msg">Message</Label>
               <Textarea id="msg" required rows={4} placeholder="Describe your issue" />
             </div>
-            <Button type="submit" className="w-full rounded-full">Send message</Button>
+            <Button type="submit" className="w-full rounded-full">
+              Send message
+            </Button>
           </form>
         </div>
       </div>

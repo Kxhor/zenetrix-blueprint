@@ -1,52 +1,66 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { authApi, type AuthUser } from "@/lib/api-client";
+import type { AxiosResponse } from "axios";
 
 export type Role = "user" | "admin";
 
-export interface AuthUser {
-  id: string;
-  name: string;
-  phone?: string;
-  email?: string;
-  role: Role;
-  avatarColor: string;
-}
-
-interface AuthState {
+export interface AuthState {
   user: AuthUser | null;
-  loginUser: (phone: string) => void;
-  loginAdmin: (email: string) => void;
+  token: string | null;
+  loginUser: (
+    phone: string,
+  ) => Promise<AxiosResponse<{ success: boolean; expiresIn: number; _devCode?: string }>>;
+  verifyOtp: (phone: string, code: string) => Promise<void>;
+  loginAdmin: (email: string, password: string) => Promise<void>;
+  register: (phone: string, name?: string) => Promise<void>;
   logout: () => void;
+  setUser: (user: AuthUser | null) => void;
+  setToken: (token: string) => void;
 }
-
-const colors = ["#0EA5E9", "#16A34A", "#7C3AED", "#F59E0B", "#EC4899"];
 
 export const useAuthStore = create<AuthState>()(
   persist(
     (set) => ({
       user: null,
-      loginUser: (phone) =>
-        set({
-          user: {
-            id: "u_" + Math.random().toString(36).slice(2, 10),
-            name: "Aarav Sharma",
-            phone,
-            role: "user",
-            avatarColor: colors[Math.floor(Math.random() * colors.length)],
-          },
-        }),
-      loginAdmin: (email) =>
-        set({
-          user: {
-            id: "a_" + Math.random().toString(36).slice(2, 10),
-            name: email.split("@")[0].replace(/\./g, " ").replace(/\b\w/g, (c) => c.toUpperCase()),
-            email,
-            role: "admin",
-            avatarColor: colors[0],
-          },
-        }),
-      logout: () => set({ user: null }),
+      token: null,
+
+      loginUser: async (phone) => {
+        return authApi.sendOtp(phone);
+      },
+
+      verifyOtp: async (phone, code) => {
+        const { data } = await authApi.verifyOtp(phone, code);
+        authApi.setToken(data.token);
+        set({ user: data.user, token: data.token });
+      },
+
+      loginAdmin: async (email, password) => {
+        const { data } = await authApi.adminLogin(email, password);
+        authApi.setToken(data.token);
+        set({ user: data.user, token: data.token });
+      },
+
+      register: async (phone, name) => {
+        const { data } = await authApi.register(phone, name);
+        authApi.setToken(data.token);
+        set({ user: data.user, token: data.token });
+      },
+
+      logout: () => {
+        authApi.logout();
+        set({ user: null, token: null });
+      },
+
+      setUser: (user) => set({ user }),
+      setToken: (token) => set({ token }),
     }),
-    { name: "zenetrix.auth" },
+    {
+      name: "zenetrix.auth",
+      partialize: (state) => ({
+        user: state.user,
+        token: state.token,
+      }),
+    },
   ),
 );

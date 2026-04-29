@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { AlertTriangle, Clock } from "lucide-react";
-import { api } from "@/mocks/api";
+import { api } from "@/lib/api-client";
 import { AdminPageHeader } from "./_admin";
 import { SessionStatusBadge } from "@/components/status-badge";
 import { formatRelativeTime } from "@/lib/format";
@@ -19,7 +19,10 @@ function Cases() {
 
   return (
     <>
-      <AdminPageHeader title="Escalated cases" subtitle={`${rows.length} cases need senior review.`} />
+      <AdminPageHeader
+        title="Escalated cases"
+        subtitle={`${rows.length} cases need senior review.`}
+      />
       <div className="space-y-3 p-6">
         {rows.length === 0 && (
           <div className="rounded-2xl border bg-card p-10 text-center shadow-card">

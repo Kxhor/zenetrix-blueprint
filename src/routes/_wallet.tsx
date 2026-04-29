@@ -117,15 +117,14 @@ export function WalletPageHeader({
       <div className="min-w-0">
         {back && (
           <Link
-            to={back}
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            to={back as any}
             className="mb-1 inline-flex items-center gap-1 text-xs font-medium text-muted-foreground hover:text-foreground"
           >
             <ChevronLeft className="h-3.5 w-3.5" /> Back
           </Link>
         )}
-        <h1 className="font-display text-2xl font-semibold tracking-tight text-balance">
-          {title}
-        </h1>
+        <h1 className="font-display text-2xl font-semibold tracking-tight text-balance">{title}</h1>
         {subtitle && <p className="mt-0.5 text-sm text-muted-foreground">{subtitle}</p>}
       </div>
       {right ?? (

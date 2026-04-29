@@ -1,8 +1,16 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import {
-  ShieldCheck, Fingerprint, Eye, Wallet, ArrowRight, Lock, Building2,
-  CheckCircle2, Sparkles, Globe2,
+  ShieldCheck,
+  Fingerprint,
+  Eye,
+  Wallet,
+  ArrowRight,
+  Lock,
+  Building2,
+  CheckCircle2,
+  Sparkles,
+  Globe2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ZenetrixWordmark, ZenetrixMark } from "@/components/brand";
@@ -34,9 +42,15 @@ function Landing() {
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5">
           <ZenetrixWordmark />
           <nav className="hidden items-center gap-7 text-sm text-muted-foreground md:flex">
-            <a href="#how" className="hover:text-foreground">How it works</a>
-            <a href="#network" className="hover:text-foreground">Network</a>
-            <a href="#trust" className="hover:text-foreground">Trust</a>
+            <a href="#how" className="hover:text-foreground">
+              How it works
+            </a>
+            <a href="#network" className="hover:text-foreground">
+              Network
+            </a>
+            <a href="#trust" className="hover:text-foreground">
+              Trust
+            </a>
           </nav>
           <div className="flex items-center gap-2">
             <Button asChild variant="ghost" size="sm" className="hidden sm:inline-flex">
@@ -82,9 +96,8 @@ function Landing() {
               transition={{ delay: 0.1 }}
               className="mt-5 max-w-xl text-pretty text-lg text-muted-foreground"
             >
-              Zenetrix issues portable KYC credentials backed by liveness, document
-              authentication and consent ledger. Your customers verify in 60 seconds —
-              you stay regulator-ready.
+              Zenetrix issues portable KYC credentials backed by liveness, document authentication
+              and consent ledger. Your customers verify in 60 seconds — you stay regulator-ready.
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 12 }}
@@ -134,14 +147,12 @@ function Landing() {
       {/* Trust strip */}
       <section id="trust" className="border-y bg-muted/40">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-10 gap-y-4 px-5 py-7 text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">
-          {["RBI · v-KYC", "DPDP 2023", "ISO 27001", "SOC 2 Type II", "AA Sahamati"].map(
-            (t) => (
-              <span key={t} className="flex items-center gap-2">
-                <span className="inline-block h-1 w-1 rounded-full bg-foreground/30" />
-                {t}
-              </span>
-            ),
-          )}
+          {["RBI · v-KYC", "DPDP 2023", "ISO 27001", "SOC 2 Type II", "AA Sahamati"].map((t) => (
+            <span key={t} className="flex items-center gap-2">
+              <span className="inline-block h-1 w-1 rounded-full bg-foreground/30" />
+              {t}
+            </span>
+          ))}
         </div>
       </section>
 
@@ -155,15 +166,27 @@ function Landing() {
             One identity, anywhere your customer transacts.
           </h2>
           <p className="mt-3 text-muted-foreground">
-            Customers complete KYC once. Banks, brokers, NBFCs and insurers verify on demand —
-            with full consent and a tamper-evident audit trail.
+            Customers complete KYC once. Banks, brokers, NBFCs and insurers verify on demand — with
+            full consent and a tamper-evident audit trail.
           </p>
         </div>
         <div className="mt-12 grid gap-5 md:grid-cols-3">
           {[
-            { icon: Fingerprint, title: "Onboard in 60 seconds", body: "Aadhaar, PAN, address, liveness — all in one wizard with guided steps." },
-            { icon: Wallet, title: "Hold credentials in a wallet", body: "Verifiable credentials live on the customer's device, not a partner's database." },
-            { icon: Eye, title: "Share only what's needed", body: "Granular consent. Time-bound scopes. Revocable in one tap." },
+            {
+              icon: Fingerprint,
+              title: "Onboard in 60 seconds",
+              body: "Aadhaar, PAN, address, liveness — all in one wizard with guided steps.",
+            },
+            {
+              icon: Wallet,
+              title: "Hold credentials in a wallet",
+              body: "Verifiable credentials live on the customer's device, not a partner's database.",
+            },
+            {
+              icon: Eye,
+              title: "Share only what's needed",
+              body: "Granular consent. Time-bound scopes. Revocable in one tap.",
+            },
           ].map((s, i) => (
             <motion.div
               key={s.title}
@@ -188,15 +211,13 @@ function Landing() {
         <div className="overflow-hidden rounded-3xl border bg-card shadow-card">
           <div className="grid gap-10 p-8 md:grid-cols-2 md:p-12">
             <div className="flex flex-col justify-center">
-              <p className="text-xs font-medium uppercase tracking-[0.18em] text-accent">
-                Network
-              </p>
+              <p className="text-xs font-medium uppercase tracking-[0.18em] text-accent">Network</p>
               <h2 className="mt-3 font-display text-3xl font-semibold tracking-tight">
                 Built for regulated India.
               </h2>
               <p className="mt-3 max-w-md text-muted-foreground">
-                Plug into the Zenetrix network and accept verified credentials from any
-                partner — bank, broker, NBFC, insurer, exchange.
+                Plug into the Zenetrix network and accept verified credentials from any partner —
+                bank, broker, NBFC, insurer, exchange.
               </p>
               <div className="mt-6 grid gap-3 sm:grid-cols-2">
                 {[
@@ -205,7 +226,10 @@ function Landing() {
                   { icon: ShieldCheck, label: "Insurers" },
                   { icon: Lock, label: "Regulators" },
                 ].map((p) => (
-                  <div key={p.label} className="flex items-center gap-3 rounded-xl border bg-background p-3">
+                  <div
+                    key={p.label}
+                    className="flex items-center gap-3 rounded-xl border bg-background p-3"
+                  >
                     <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-muted">
                       <p.icon className="h-4 w-4 text-muted-foreground" />
                     </div>

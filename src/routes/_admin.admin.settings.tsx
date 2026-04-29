@@ -59,7 +59,10 @@ function Section({ title, rows }: { title: string; rows: { label: string; value:
       </div>
       <div>
         {rows.map((r, i) => (
-          <div key={r.label} className={`flex items-center justify-between px-5 py-3 ${i > 0 ? "border-t" : ""}`}>
+          <div
+            key={r.label}
+            className={`flex items-center justify-between px-5 py-3 ${i > 0 ? "border-t" : ""}`}
+          >
             <span className="text-sm text-muted-foreground">{r.label}</span>
             <span className="text-sm font-medium">{r.value}</span>
           </div>

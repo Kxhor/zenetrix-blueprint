@@ -2,13 +2,18 @@ import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { ShieldCheck, Ban } from "lucide-react";
-import { api } from "@/mocks/api";
+import { api } from "@/lib/api-client";
 import { AdminPageHeader } from "./_admin";
 import { Button } from "@/components/ui/button";
 import { StatusBadge } from "@/components/status-badge";
 import { formatDate } from "@/lib/format";
 import {
-  Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
 
@@ -32,7 +37,10 @@ function Credentials() {
 
   return (
     <>
-      <AdminPageHeader title="Credential registry" subtitle="Issued credentials across the network." />
+      <AdminPageHeader
+        title="Credential registry"
+        subtitle="Issued credentials across the network."
+      />
       <div className="space-y-4 p-6">
         <div className="overflow-hidden rounded-2xl border bg-card shadow-card">
           <table className="w-full text-sm">
@@ -56,10 +64,22 @@ function Credentials() {
                     </div>
                   </td>
                   <td className="px-4 py-3 font-mono text-xs">{c.serial}</td>
-                  <td className="px-4 py-3 text-xs text-muted-foreground">{formatDate(c.issuedAt)}</td>
-                  <td className="px-4 py-3 text-xs text-muted-foreground">{formatDate(c.expiresAt)}</td>
+                  <td className="px-4 py-3 text-xs text-muted-foreground">
+                    {formatDate(c.issuedAt)}
+                  </td>
+                  <td className="px-4 py-3 text-xs text-muted-foreground">
+                    {formatDate(c.expiresAt)}
+                  </td>
                   <td className="px-4 py-3">
-                    <StatusBadge tone={c.status === "active" ? "success" : c.status === "revoked" ? "destructive" : "muted"}>
+                    <StatusBadge
+                      tone={
+                        c.status === "active"
+                          ? "success"
+                          : c.status === "revoked"
+                            ? "destructive"
+                            : "muted"
+                      }
+                    >
                       {c.status}
                     </StatusBadge>
                   </td>
@@ -90,8 +110,14 @@ function Credentials() {
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="gap-2 sm:gap-2">
-            <Button variant="outline" onClick={() => setTarget(null)}>Cancel</Button>
-            <Button variant="destructive" onClick={() => target && revoke.mutate(target)} disabled={revoke.isPending}>
+            <Button variant="outline" onClick={() => setTarget(null)}>
+              Cancel
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={() => target && revoke.mutate(target)}
+              disabled={revoke.isPending}
+            >
               Revoke
             </Button>
           </DialogFooter>

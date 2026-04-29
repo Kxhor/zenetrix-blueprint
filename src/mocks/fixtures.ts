@@ -136,15 +136,37 @@ export const mockCredentials: Credential[] = [
 ];
 
 const indianNames = [
-  "Aarav Sharma", "Diya Mehta", "Vihaan Iyer", "Ananya Reddy", "Kabir Nair",
-  "Saanvi Kapoor", "Arjun Verma", "Ishaan Pillai", "Kiara Joshi", "Reyansh Patel",
-  "Myra Bose", "Aditya Rao", "Anika Sen", "Vivaan Khan", "Tara Menon",
-  "Rohan Das", "Prisha Singh", "Krish Bhat", "Navya Kulkarni", "Dhruv Trivedi",
+  "Aarav Sharma",
+  "Diya Mehta",
+  "Vihaan Iyer",
+  "Ananya Reddy",
+  "Kabir Nair",
+  "Saanvi Kapoor",
+  "Arjun Verma",
+  "Ishaan Pillai",
+  "Kiara Joshi",
+  "Reyansh Patel",
+  "Myra Bose",
+  "Aditya Rao",
+  "Anika Sen",
+  "Vivaan Khan",
+  "Tara Menon",
+  "Rohan Das",
+  "Prisha Singh",
+  "Krish Bhat",
+  "Navya Kulkarni",
+  "Dhruv Trivedi",
 ];
 
 const flagsPool = [
-  "device-mismatch", "vpn-detected", "doc-tamper-low", "face-low-confidence",
-  "geo-mismatch", "duplicate-aadhaar", "blocklist-hit", "age-mismatch",
+  "device-mismatch",
+  "vpn-detected",
+  "doc-tamper-low",
+  "face-low-confidence",
+  "geo-mismatch",
+  "duplicate-aadhaar",
+  "blocklist-hit",
+  "age-mismatch",
 ];
 
 function rand<T>(arr: T[], i: number) {
@@ -164,10 +186,15 @@ export const mockSessions: KycSession[] = Array.from({ length: 48 }).map((_, i) 
     documentNumber: `${(1000_0000 + i * 137).toString().padStart(12, "0")}`,
     riskScore: risk,
     status,
-    submittedAt: isoDaysAgo((i % 14), (i * 3) % 24),
+    submittedAt: isoDaysAgo(i % 14, (i * 3) % 24),
     livenessScore: 60 + ((i * 7) % 40),
     faceMatchScore: 70 + ((i * 11) % 30),
-    flags: i % 3 === 0 ? [rand(flagsPool, i), rand(flagsPool, i + 1)] : i % 5 === 0 ? [rand(flagsPool, i)] : [],
+    flags:
+      i % 3 === 0
+        ? [rand(flagsPool, i), rand(flagsPool, i + 1)]
+        : i % 5 === 0
+          ? [rand(flagsPool, i)]
+          : [],
     channel: rand(["wallet", "partner-app", "branch"] as const, i),
     reviewer: status === "approved" || status === "rejected" ? "Neha Patel" : undefined,
     notes: status === "escalated" ? "Manual review requested by L1 reviewer." : undefined,
@@ -233,13 +260,55 @@ export const mockConsents: ConsentRequest[] = [
 ];
 
 export const mockActivity: ActivityItem[] = [
-  { id: "a1", kind: "consent.granted", title: "Consent granted to Bajaj Finserv", description: "Personal loan KYC · 30 days", at: isoDaysAgo(0, 1) },
-  { id: "a2", kind: "verification.success", title: "Identity verified at Zerodha", description: "Demat account · partner verification", at: isoDaysAgo(0, 4) },
-  { id: "a3", kind: "credential.issued", title: "Address Proof issued", description: "Verified by Zenetrix Identity Network", at: isoDaysAgo(1) },
-  { id: "a4", kind: "rekyc.due", title: "Re-KYC reminder", description: "Income verification expires in 14 days", at: isoDaysAgo(2) },
-  { id: "a5", kind: "consent.revoked", title: "Revoked consent for Groww", description: "Mutual funds onboarding", at: isoDaysAgo(5) },
-  { id: "a6", kind: "session.submitted", title: "KYC session submitted", description: "Re-KYC for HDFC Bank", at: isoDaysAgo(6) },
-  { id: "a7", kind: "credential.issued", title: "Verified KYC — Full issued", description: "Initial onboarding complete", at: isoDaysAgo(14) },
+  {
+    id: "a1",
+    kind: "consent.granted",
+    title: "Consent granted to Bajaj Finserv",
+    description: "Personal loan KYC · 30 days",
+    at: isoDaysAgo(0, 1),
+  },
+  {
+    id: "a2",
+    kind: "verification.success",
+    title: "Identity verified at Zerodha",
+    description: "Demat account · partner verification",
+    at: isoDaysAgo(0, 4),
+  },
+  {
+    id: "a3",
+    kind: "credential.issued",
+    title: "Address Proof issued",
+    description: "Verified by Zenetrix Identity Network",
+    at: isoDaysAgo(1),
+  },
+  {
+    id: "a4",
+    kind: "rekyc.due",
+    title: "Re-KYC reminder",
+    description: "Income verification expires in 14 days",
+    at: isoDaysAgo(2),
+  },
+  {
+    id: "a5",
+    kind: "consent.revoked",
+    title: "Revoked consent for Groww",
+    description: "Mutual funds onboarding",
+    at: isoDaysAgo(5),
+  },
+  {
+    id: "a6",
+    kind: "session.submitted",
+    title: "KYC session submitted",
+    description: "Re-KYC for HDFC Bank",
+    at: isoDaysAgo(6),
+  },
+  {
+    id: "a7",
+    kind: "credential.issued",
+    title: "Verified KYC — Full issued",
+    description: "Initial onboarding complete",
+    at: isoDaysAgo(14),
+  },
 ];
 
 export const mockAudit: AuditEntry[] = Array.from({ length: 30 }).map((_, i) => ({
@@ -271,7 +340,10 @@ export const mockAudit: AuditEntry[] = Array.from({ length: 30 }).map((_, i) => 
 export const mockApprovalsTrend = Array.from({ length: 14 }).map((_, i) => {
   const base = 80 + Math.round(Math.sin(i / 2) * 18);
   return {
-    day: new Date(Date.now() - (13 - i) * 86400000).toLocaleDateString("en-IN", { day: "2-digit", month: "short" }),
+    day: new Date(Date.now() - (13 - i) * 86400000).toLocaleDateString("en-IN", {
+      day: "2-digit",
+      month: "short",
+    }),
     approved: base + (i % 3) * 4,
     rejected: 14 + (i % 5) * 2,
     escalated: 6 + (i % 4),

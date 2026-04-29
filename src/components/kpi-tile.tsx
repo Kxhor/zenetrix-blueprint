@@ -1,5 +1,5 @@
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useId } from "react";
 import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -78,6 +78,8 @@ export function KpiTile({
 }
 
 function Sparkline({ values, className }: { values: number[]; className?: string }) {
+  const uid = useId();
+  const gradId = `sl-g-${uid.replace(/:/g, "")}`;
   const w = 120;
   const h = 28;
   const min = Math.min(...values);
@@ -93,13 +95,13 @@ function Sparkline({ values, className }: { values: number[]; className?: string
   return (
     <svg viewBox={`0 0 ${w} ${h}`} className={cn("h-7 w-full text-accent", className)}>
       <defs>
-        <linearGradient id="sl-g" x1="0" y1="0" x2="0" y2="1">
+        <linearGradient id={gradId} x1="0" y1="0" x2="0" y2="1">
           <stop offset="0" stopColor="currentColor" stopOpacity="0.35" />
           <stop offset="1" stopColor="currentColor" stopOpacity="0" />
         </linearGradient>
       </defs>
       <polyline points={pts} fill="none" stroke="currentColor" strokeWidth="1.5" />
-      <polygon points={`0,${h} ${pts} ${w},${h}`} fill="url(#sl-g)" />
+      <polygon points={`0,${h} ${pts} ${w},${h}`} fill={`url(#${gradId})`} />
     </svg>
   );
 }

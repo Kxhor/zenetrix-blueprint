@@ -45,6 +45,8 @@ function OnboardingIdentity() {
   });
 
   function onFile(file: File) {
+    // Revoke previous object URL to prevent memory leak
+    if (doc?.url) URL.revokeObjectURL(doc.url);
     const url = URL.createObjectURL(file);
     setDoc({ name: file.name, url });
     setIdentity({ documentName: file.name, documentPreview: url });
@@ -95,7 +97,11 @@ function OnboardingIdentity() {
         </Field>
 
         <Field label="Address" error={form.formState.errors.address?.message}>
-          <Textarea {...form.register("address")} rows={3} placeholder="House no., street, city, state, PIN" />
+          <Textarea
+            {...form.register("address")}
+            rows={3}
+            placeholder="House no., street, city, state, PIN"
+          />
         </Field>
 
         <div>
@@ -114,6 +120,7 @@ function OnboardingIdentity() {
               <button
                 type="button"
                 onClick={() => {
+                  if (doc?.url) URL.revokeObjectURL(doc.url);
                   setDoc(null);
                   setIdentity({ documentName: undefined, documentPreview: undefined });
                 }}

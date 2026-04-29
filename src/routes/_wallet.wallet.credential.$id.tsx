@@ -1,15 +1,20 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { QrCode, Share2, ShieldCheck, EyeOff, Eye, ChevronLeft } from "lucide-react";
 import { useState } from "react";
-import { api } from "@/mocks/api";
+import { api } from "@/lib/api-client";
 import { CredentialCard } from "@/components/credential-card";
 import { Button } from "@/components/ui/button";
 import { PageLoader } from "@/components/skeletons";
 import { StatusBadge } from "@/components/status-badge";
 import { formatDate } from "@/lib/format";
 import {
-  Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogFooter,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
 
@@ -43,7 +48,9 @@ function CredentialDetail() {
     return (
       <div className="px-5 py-10 text-center">
         <p className="text-muted-foreground">Credential not found.</p>
-        <Link to="/wallet" className="mt-3 inline-block text-accent">Back to wallet</Link>
+        <Link to="/wallet" className="mt-3 inline-block text-accent">
+          Back to wallet
+        </Link>
       </div>
     );
   }
@@ -51,7 +58,10 @@ function CredentialDetail() {
   return (
     <div className="space-y-6">
       <div className="px-5 pt-4">
-        <Link to="/wallet" className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground">
+        <Link
+          to="/wallet"
+          className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground"
+        >
           <ChevronLeft className="h-3.5 w-3.5" /> Wallet
         </Link>
       </div>
@@ -64,7 +74,11 @@ function CredentialDetail() {
         <Button onClick={() => setShareOpen(true)} className="h-11 rounded-full">
           <QrCode className="mr-1 h-4 w-4" /> Share
         </Button>
-        <Button variant="outline" className="h-11 rounded-full" onClick={() => setShowSensitive((s) => !s)}>
+        <Button
+          variant="outline"
+          className="h-11 rounded-full"
+          onClick={() => setShowSensitive((s) => !s)}
+        >
           {showSensitive ? <EyeOff className="mr-1 h-4 w-4" /> : <Eye className="mr-1 h-4 w-4" />}
           {showSensitive ? "Hide" : "Reveal"} details
         </Button>
@@ -98,14 +112,24 @@ function CredentialDetail() {
         </h2>
         <div className="rounded-2xl border bg-card p-4 shadow-card">
           <Row label="Status">
-            <StatusBadge tone={data.status === "active" ? "success" : data.status === "revoked" ? "destructive" : "muted"}>
+            <StatusBadge
+              tone={
+                data.status === "active"
+                  ? "success"
+                  : data.status === "revoked"
+                    ? "destructive"
+                    : "muted"
+              }
+            >
               {data.status}
             </StatusBadge>
           </Row>
           <Row label="Issuer">{data.issuer}</Row>
           <Row label="Issued">{formatDate(data.issuedAt)}</Row>
           <Row label="Expires">{formatDate(data.expiresAt)}</Row>
-          <Row label="Serial"><span className="font-mono text-xs">{data.serial}</span></Row>
+          <Row label="Serial">
+            <span className="font-mono text-xs">{data.serial}</span>
+          </Row>
         </div>
       </section>
 
@@ -158,7 +182,9 @@ function CredentialDetail() {
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="gap-2 sm:gap-2">
-            <Button variant="outline" onClick={() => setRevokeOpen(false)}>Cancel</Button>
+            <Button variant="outline" onClick={() => setRevokeOpen(false)}>
+              Cancel
+            </Button>
             <Button
               variant="destructive"
               onClick={() => revoke.mutate()}
@@ -194,10 +220,7 @@ function FakeQR({ seed }: { seed: string }) {
   }
   return (
     <div className="rounded-2xl border bg-card p-4 shadow-card">
-      <div
-        className="grid gap-[2px]"
-        style={{ gridTemplateColumns: `repeat(${size}, 1fr)` }}
-      >
+      <div className="grid gap-[2px]" style={{ gridTemplateColumns: `repeat(${size}, 1fr)` }}>
         {cells.map((on, i) => (
           <div
             key={i}

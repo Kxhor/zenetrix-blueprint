@@ -15,21 +15,29 @@ export const Route = createFileRoute("/admin/login")({
 });
 
 function AdminLogin() {
-  const [email, setEmail] = useState("neha.patel@zenetrix.io");
+  const [email, setEmail] = useState("neha.patel@zenetrix.in");
   const [password, setPassword] = useState("demo-pass");
   const [show, setShow] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const loginAdmin = useAuthStore((s) => s.loginAdmin);
 
-  function submit(e: React.FormEvent) {
+  async function submit(e: React.FormEvent) {
     e.preventDefault();
     if (!email || !password) {
       toast.error("Enter email and password");
       return;
     }
-    loginAdmin(email);
-    toast.success("Welcome back, analyst");
-    navigate({ to: "/admin/dashboard" });
+    setLoading(true);
+    try {
+      await loginAdmin(email, password);
+      toast.success("Welcome back, analyst");
+      navigate({ to: "/admin/dashboard" });
+    } catch {
+      toast.error("Invalid credentials. Try again.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -43,7 +51,9 @@ function AdminLogin() {
               <Lock className="h-3 w-3" /> Analyst Console · v3.2
             </span>
             <h1 className="mt-4 font-display text-4xl font-semibold leading-[1.05] tracking-tight">
-              Sign in to review<br />verified identities.
+              Sign in to review
+              <br />
+              verified identities.
             </h1>
             <p className="mt-3 max-w-sm text-muted-foreground">
               Triage sessions, decide on cases and export audit-ready logs — all in one place.
@@ -103,8 +113,8 @@ function AdminLogin() {
               </div>
             </div>
 
-            <Button type="submit" className="h-11 w-full rounded-full">
-              Sign in <ArrowRight className="ml-1 h-4 w-4" />
+            <Button type="submit" className="h-11 w-full rounded-full" disabled={loading}>
+              {loading ? "Signing in..." : "Sign in"} <ArrowRight className="ml-1 h-4 w-4" />
             </Button>
 
             <p className="text-center text-xs text-muted-foreground">

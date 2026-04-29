@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { ShieldCheck, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
-import type { Credential } from "@/mocks/fixtures";
+import type { Credential } from "@/lib/api-client";
 
 const typeAccent: Record<Credential["type"], string> = {
   "kyc-full": "from-[oklch(0.32_0.05_248)] via-[oklch(0.28_0.06_258)] to-[oklch(0.42_0.1_235)]",
@@ -34,21 +34,22 @@ export function CredentialCard({
         "group relative overflow-hidden rounded-3xl text-primary-foreground",
         "shadow-elegant ring-1 ring-white/10 transition-transform duration-500",
         "hover:-translate-y-0.5 active:translate-y-0",
-        size === "compact" ? "aspect-[1.78/1]" : size === "lg" ? "aspect-[1.62/1]" : "aspect-[1.66/1]",
+        size === "compact"
+          ? "aspect-[1.78/1]"
+          : size === "lg"
+            ? "aspect-[1.62/1]"
+            : "aspect-[1.66/1]",
       )}
     >
       {/* Base gradient */}
-      <div
-        className={cn(
-          "absolute inset-0 bg-gradient-to-br",
-          typeAccent[credential.type],
-        )}
-      />
+      <div className={cn("absolute inset-0 bg-gradient-to-br", typeAccent[credential.type])} />
       {/* Glow */}
       <div
         aria-hidden
         className="absolute -inset-x-10 -top-20 h-40 rounded-full blur-3xl opacity-60"
-        style={{ background: "radial-gradient(closest-side, oklch(0.78 0.16 220 / 0.55), transparent 70%)" }}
+        style={{
+          background: "radial-gradient(closest-side, oklch(0.78 0.16 220 / 0.55), transparent 70%)",
+        }}
       />
       {/* Holographic shimmer */}
       {showShimmer && (
@@ -126,7 +127,8 @@ export function CredentialCard({
 
   if (to) {
     return (
-      <Link to={to} className="block">
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      <Link to={to as any} className="block">
         {inner}
       </Link>
     );

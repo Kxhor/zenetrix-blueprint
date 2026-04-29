@@ -21,7 +21,8 @@ export function OnboardingProgress({ current, back }: { current: Step; back?: st
       <div className="px-5 pb-3 pt-3">
         <div className="flex items-center justify-between text-xs">
           <Link
-            to={back ?? "/wallet"}
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            to={(back ?? "/wallet") as any}
             className="inline-flex items-center gap-1 text-muted-foreground hover:text-foreground"
           >
             <ChevronLeft className="h-3.5 w-3.5" /> Back

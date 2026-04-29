@@ -22,9 +22,11 @@ export function PhoneOtpAuth({ mode }: { mode: "login" | "register" }) {
   const [phase, setPhase] = useState<"phone" | "otp">("phone");
   const [phone, setPhone] = useState("");
   const [otp, setOtp] = useState<string[]>(Array(6).fill(""));
+  const [loading, setLoading] = useState(false);
   const [resendIn, setResendIn] = useState(0);
   const navigate = useNavigate();
   const loginUser = useAuthStore((s) => s.loginUser);
+  const verifyOtp = useAuthStore((s) => s.verifyOtp);
   const inputs = useRef<(HTMLInputElement | null)[]>([]);
 
   useEffect(() => {
@@ -33,16 +35,29 @@ export function PhoneOtpAuth({ mode }: { mode: "login" | "register" }) {
     return () => clearInterval(id);
   }, [resendIn]);
 
-  function sendOtp(e: React.FormEvent) {
+  async function sendOtp(e: React.FormEvent) {
     e.preventDefault();
     if (phone.replace(/\D/g, "").length < 10) {
       toast.error("Enter a valid 10-digit phone number");
       return;
     }
-    setPhase("otp");
-    setResendIn(30);
-    toast.success("OTP sent", { description: "Use any 6-digit code in this demo." });
-    setTimeout(() => inputs.current[0]?.focus(), 50);
+    setLoading(true);
+    try {
+      const fullPhone = `+91${phone.replace(/\D/g, "")}`;
+      const { data } = await loginUser(fullPhone);
+      setPhase("otp");
+      setResendIn(30);
+      if (data._devCode) {
+        toast.success("OTP sent", { description: `Demo code: ${data._devCode}` });
+      } else {
+        toast.success("OTP sent", { description: "Check your phone for the 6-digit code." });
+      }
+      setTimeout(() => inputs.current[0]?.focus(), 50);
+    } catch {
+      toast.error("Failed to send OTP. Try again.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   function handleOtpChange(idx: number, v: string) {
@@ -56,11 +71,21 @@ export function PhoneOtpAuth({ mode }: { mode: "login" | "register" }) {
     }
   }
 
-  function submitOtp(code: string) {
+  async function submitOtp(code: string) {
     if (code.length < 6) return;
-    loginUser("+91 " + phone);
-    toast.success(mode === "register" ? "Welcome to Zenetrix" : "Welcome back");
-    navigate({ to: mode === "register" ? "/onboarding/start" : "/wallet" });
+    setLoading(true);
+    try {
+      const fullPhone = `+91${phone.replace(/\D/g, "")}`;
+      await verifyOtp(fullPhone, code);
+      toast.success(mode === "register" ? "Welcome to Zenetrix" : "Welcome back");
+      navigate({
+        to: mode === "register" ? "/onboarding/start" : "/wallet",
+      });
+    } catch {
+      toast.error("Invalid OTP. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -68,7 +93,10 @@ export function PhoneOtpAuth({ mode }: { mode: "login" | "register" }) {
       <GradientMesh intensity="soft" />
       <div className="relative mx-auto flex min-h-screen max-w-md flex-col px-5 py-6">
         <header className="flex items-center justify-between">
-          <Link to="/" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground">
+          <Link
+            to="/"
+            className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground"
+          >
             <ChevronLeft className="h-4 w-4" /> Back
           </Link>
           <ZenetrixWordmark />
@@ -115,8 +143,12 @@ export function PhoneOtpAuth({ mode }: { mode: "login" | "register" }) {
                   />
                 </div>
               </div>
-              <Button type="submit" className="h-11 w-full rounded-full text-base">
-                Send OTP <ArrowRight className="ml-1 h-4 w-4" />
+              <Button
+                type="submit"
+                className="h-11 w-full rounded-full text-base"
+                disabled={loading}
+              >
+                {loading ? "Sending..." : "Send OTP"} <ArrowRight className="ml-1 h-4 w-4" />
               </Button>
               <p className="text-center text-xs text-muted-foreground">
                 {mode === "login" ? "New to Zenetrix?" : "Already have an account?"}{" "}
@@ -134,7 +166,9 @@ export function PhoneOtpAuth({ mode }: { mode: "login" | "register" }) {
                 {otp.map((d, i) => (
                   <input
                     key={i}
-                    ref={(el) => { inputs.current[i] = el; }}
+                    ref={(el) => {
+                      inputs.current[i] = el;
+                    }}
                     inputMode="numeric"
                     maxLength={1}
                     value={d}
@@ -149,9 +183,9 @@ export function PhoneOtpAuth({ mode }: { mode: "login" | "register" }) {
               <Button
                 onClick={() => submitOtp(otp.join(""))}
                 className="h-11 w-full rounded-full text-base"
-                disabled={otp.join("").length < 6}
+                disabled={otp.join("").length < 6 || loading}
               >
-                Verify
+                {loading ? "Verifying..." : "Verify"}
               </Button>
               <div className="flex items-center justify-between text-sm">
                 <button
@@ -162,9 +196,15 @@ export function PhoneOtpAuth({ mode }: { mode: "login" | "register" }) {
                 </button>
                 <button
                   disabled={resendIn > 0}
-                  onClick={() => {
+                  onClick={async () => {
                     setResendIn(30);
-                    toast.success("OTP resent");
+                    try {
+                      const fullPhone = `+91${phone.replace(/\D/g, "")}`;
+                      await loginUser(fullPhone);
+                      toast.success("OTP resent");
+                    } catch {
+                      toast.error("Failed to resend OTP");
+                    }
                   }}
                   className="font-medium text-accent disabled:text-muted-foreground"
                 >

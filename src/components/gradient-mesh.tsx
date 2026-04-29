@@ -16,11 +16,7 @@ export function GradientMesh({
   return (
     <div
       aria-hidden
-      className={cn(
-        "pointer-events-none absolute inset-0 gradient-mesh",
-        opacity,
-        className,
-      )}
+      className={cn("pointer-events-none absolute inset-0 gradient-mesh", opacity, className)}
     />
   );
 }

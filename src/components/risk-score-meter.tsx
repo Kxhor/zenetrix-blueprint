@@ -1,3 +1,4 @@
+import { useId } from "react";
 import { cn } from "@/lib/utils";
 import { riskBand } from "@/lib/format";
 
@@ -10,6 +11,8 @@ export function RiskScoreMeter({
   size?: number;
   strokeWidth?: number;
 }) {
+  const uid = useId();
+  const gradId = `rsm-g-${uid.replace(/:/g, "")}`;
   const r = (size - strokeWidth) / 2;
   const c = 2 * Math.PI * r;
   const pct = Math.max(0, Math.min(100, score)) / 100;
@@ -27,7 +30,7 @@ export function RiskScoreMeter({
         className={cn("rotate-[135deg]", tone)}
       >
         <defs>
-          <linearGradient id="rsm-g" x1="0" y1="0" x2="1" y2="1">
+          <linearGradient id={gradId} x1="0" y1="0" x2="1" y2="1">
             <stop offset="0" stopColor="oklch(0.62 0.16 148)" />
             <stop offset="0.5" stopColor="oklch(0.78 0.15 75)" />
             <stop offset="1" stopColor="oklch(0.6 0.22 27)" />
@@ -48,7 +51,7 @@ export function RiskScoreMeter({
           cy={size / 2}
           r={r}
           fill="none"
-          stroke="url(#rsm-g)"
+          stroke={`url(#${gradId})`}
           strokeWidth={strokeWidth}
           strokeDasharray={c}
           strokeDashoffset={offset}

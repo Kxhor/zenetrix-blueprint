@@ -14,7 +14,7 @@ function OnboardingReview() {
   const { identity, livenessScore } = useOnboardingStore();
 
   function submit() {
-    setTimeout(() => navigate({ to: "/onboarding/success" }), 50);
+    navigate({ to: "/onboarding/success" });
   }
 
   const rows = [

@@ -10,7 +10,11 @@ export const Route = createFileRoute("/_wallet/onboarding/liveness")({
   component: OnboardingLiveness,
 });
 
-const prompts = ["Look straight at the camera", "Slowly blink your eyes", "Turn your head left, then right"];
+const prompts = [
+  "Look straight at the camera",
+  "Slowly blink your eyes",
+  "Turn your head left, then right",
+];
 
 function OnboardingLiveness() {
   const navigate = useNavigate();
@@ -22,7 +26,7 @@ function OnboardingLiveness() {
   useEffect(() => {
     if (phase !== "running") return;
     let raf = 0;
-    let start = performance.now();
+    const start = performance.now();
     const total = 4500;
     const tick = (t: number) => {
       const p = Math.min(1, (t - start) / total);
@@ -52,7 +56,14 @@ function OnboardingLiveness() {
           <div className="relative flex h-64 w-64 items-center justify-center">
             {/* Ring */}
             <svg viewBox="0 0 100 100" className="absolute inset-0 -rotate-90">
-              <circle cx="50" cy="50" r="46" fill="none" stroke="oklch(0.92 0.008 250)" strokeWidth="4" />
+              <circle
+                cx="50"
+                cy="50"
+                r="46"
+                fill="none"
+                stroke="oklch(0.92 0.008 250)"
+                strokeWidth="4"
+              />
               <circle
                 cx="50"
                 cy="50"
@@ -67,7 +78,9 @@ function OnboardingLiveness() {
               />
             </svg>
             {/* Avatar */}
-            <div className={`relative flex h-44 w-44 items-center justify-center rounded-full bg-gradient-to-br from-muted to-card ${phase === "running" ? "animate-pulse-ring" : ""}`}>
+            <div
+              className={`relative flex h-44 w-44 items-center justify-center rounded-full bg-gradient-to-br from-muted to-card ${phase === "running" ? "animate-pulse-ring" : ""}`}
+            >
               <AnimatePresence mode="wait">
                 {phase === "done" ? (
                   <motion.div
@@ -79,7 +92,11 @@ function OnboardingLiveness() {
                     <CheckCircle2 className="h-10 w-10" />
                   </motion.div>
                 ) : (
-                  <motion.div key="face" initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}>
+                  <motion.div
+                    key="face"
+                    initial={{ scale: 0.9, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                  >
                     <ScanFace className="h-16 w-16 text-muted-foreground" />
                   </motion.div>
                 )}
@@ -107,7 +124,11 @@ function OnboardingLiveness() {
 
           <div className="mt-6 w-full">
             {phase === "intro" && (
-              <Button size="lg" className="h-12 w-full rounded-full text-base" onClick={() => setPhase("running")}>
+              <Button
+                size="lg"
+                className="h-12 w-full rounded-full text-base"
+                onClick={() => setPhase("running")}
+              >
                 Start liveness
               </Button>
             )}

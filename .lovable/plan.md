@@ -1,4 +1,3 @@
-
 # Zenetrix — Build Plan
 
 A production-grade fintech identity verification app with two surfaces in one codebase: a mobile-first **User Wallet** and a desktop-first **Analyst Admin Console**. Fully mocked auth and data — runs entirely in the browser. Visual bar set to **Stripe × Ramp × Revolut**: investor-demo quality.
@@ -22,6 +21,7 @@ New deps: `zustand`, `@tanstack/react-query`, `react-hook-form`, `@hookform/reso
 This is the part that makes it feel investor-grade. Locked into `src/styles.css` as semantic tokens (oklch):
 
 **Palette**
+
 - **Navy** `#1A3A5C` → `--primary` — deep, trustworthy, used for headers and primary CTAs
 - **Accent Sky** `#0EA5E9` → `--accent` — links, focus rings, data highlights
 - **Verified Green** `#16A34A` → `--success`
@@ -30,17 +30,20 @@ This is the part that makes it feel investor-grade. Locked into `src/styles.css`
 - Subtle gradient meshes (navy → indigo → sky at 6–10% opacity) behind hero sections, dashboard headers, and credential cards — the Ramp/Stripe signature look
 
 **Typography (real type system, not just font swaps)**
+
 - **DM Sans** for headings — tight tracking on display sizes (-0.02em), confident weights (500/600)
 - **Inter** for body — optical sizing on, 14/16/18 with 1.5 line-height
 - **JetBrains Mono** for IDs, hashes, credential numbers — Ramp uses mono for amounts; we use it for identity primitives
 - A clear scale: Display 48 → H1 32 → H2 24 → H3 20 → Body 16 → Small 14 → Micro 12, all with deliberate weight pairings
 
 **Surfaces & glassmorphism (subtle, never gimmicky)**
+
 - Cards: white surface, 1px hairline border, layered shadow (Stripe's recipe: a tight 0/1/2 shadow + a soft 0/8/24 ambient)
 - Glass panels on the wallet credential card and admin top utility bar: `backdrop-blur-xl` over a tinted gradient with 60–70% opacity, 1px inner highlight border. Used sparingly — credential card front, modal overlays, sticky nav on scroll
 - Dashboards use elevated cards on a `bg-muted/40` canvas — the Ramp dashboard pattern
 
 **Motion**
+
 - Framer Motion page transitions: 200ms fade + 6px rise
 - Number counters animate on dashboard tiles (Revolut-style)
 - Credential card has a soft parallax shimmer on hover
@@ -48,11 +51,13 @@ This is the part that makes it feel investor-grade. Locked into `src/styles.css`
 - Every interactive element has a 150ms ease-out hover state — no jarring jumps
 
 **Data viz (Recharts, themed)**
+
 - Custom theme: brand-tinted gradients for area fills, rounded bar tops, soft grid lines, monospace tick labels for figures
 - Risk score uses a radial meter with a green→amber→red gradient sweep
 - Sparklines on KPI tiles
 
 **Iconography & spacing**
+
 - Lucide at 1.5px stroke for a refined feel
 - 8pt spacing grid; section padding 24/32/48; card padding 20/24
 - Generous whitespace — investor decks live or die on breathing room
@@ -101,6 +106,7 @@ Both shells gate behind `authStore` (`role: 'user' | 'admin'`); unauthenticated 
 ## Feature build-out
 
 ### User Wallet
+
 - **Landing `/`** — hero with gradient mesh, animated trust strip (RBI-style compliance badges), 3-step "How it works" with sequential reveal, testimonial slab, dual CTA
 - **Register/Login** — phone + 6-digit OTP (any code accepted), animated OTP boxes with focus migration, resend countdown
 - **Onboarding wizard** — 5-step flow with a slim progress rail across the top (Stripe Checkout pattern): start → identity (Aadhaar/PAN form + drag-drop document upload with live preview, masked numbers) → liveness (mock camera with countdown ring, "blink / turn head" prompts) → review (summary card with edit-in-place) → success (confetti, issued credential reveal animation)
@@ -112,6 +118,7 @@ Both shells gate behind `authStore` (`role: 'user' | 'admin'`); unauthenticated 
 - **Help** — FAQ accordion, contact support form
 
 ### Admin Console
+
 - **Dashboard** — 4 KPI tiles with animated counters and sparklines (sessions today, approval rate, avg risk, pending), 2 hero charts: approvals trend (gradient area) + risk distribution (rounded bars), recent activity rail
 - **Sessions queue** — dense table with sticky header, filters (status, risk band, date range), sort, pagination, row hover preview, bulk actions
 - **Session detail** — split layout: left = applicant + document evidence viewer with zoom/pan, right = radial risk meter, liveness frames strip, decision panel (Approve / Reject / Escalate with reason + notes)
@@ -121,6 +128,7 @@ Both shells gate behind `authStore` (`role: 'user' | 'admin'`); unauthenticated 
 - **Settings** — read-only policy view (thresholds, retention, providers)
 
 ### Shared components (`src/components/`)
+
 AppShell wrappers, TopBar, **CredentialCard** (the hero component — glass + gradient + holographic shimmer), StatusBadge, LoadingSpinner, SkeletonCard, SessionsTable, **RiskScoreMeter** (radial gradient), EvidencePanel, ConfirmModal, FilterSidebar, ConsentRequestCard, LivenessCamera (mock), ActivityItem, KpiTile, GradientMesh, GlassPanel.
 
 ## Mock data layer

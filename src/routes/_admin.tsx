@@ -1,7 +1,15 @@
 import { createFileRoute, Outlet, Link, useRouterState, useNavigate } from "@tanstack/react-router";
 import {
-  LayoutDashboard, ListChecks, AlertTriangle, FileSearch, ShieldCheck, Settings,
-  Search, LogOut, ChevronLeft, ChevronRight,
+  LayoutDashboard,
+  ListChecks,
+  AlertTriangle,
+  FileSearch,
+  ShieldCheck,
+  Settings,
+  Search,
+  LogOut,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ZenetrixWordmark, ZenetrixMark } from "@/components/brand";
@@ -43,7 +51,9 @@ function AdminShell() {
           collapsed ? "w-[72px]" : "w-60",
         )}
       >
-        <div className={cn("flex h-16 items-center border-b px-4", collapsed && "justify-center px-0")}>
+        <div
+          className={cn("flex h-16 items-center border-b px-4", collapsed && "justify-center px-0")}
+        >
           {collapsed ? <ZenetrixMark /> : <ZenetrixWordmark />}
         </div>
         <nav className="flex-1 space-y-1 p-2">
@@ -87,7 +97,9 @@ function AdminShell() {
         <header className="sticky top-0 z-20 glass-strong border-b">
           <div className="flex h-16 items-center justify-between gap-4 px-5">
             <div className="flex flex-1 items-center gap-3">
-              <div className="md:hidden"><ZenetrixWordmark /></div>
+              <div className="md:hidden">
+                <ZenetrixWordmark />
+              </div>
               <div className="relative hidden flex-1 max-w-md md:block">
                 <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                 <Input placeholder="Search sessions, cases, credentials…" className="h-9 pl-9" />
@@ -110,7 +122,10 @@ function AdminShell() {
                 <span className="hidden pr-2 text-sm font-medium sm:inline">{user.name}</span>
               </div>
               <button
-                onClick={() => { logout(); navigate({ to: "/admin/login" }); }}
+                onClick={() => {
+                  logout();
+                  navigate({ to: "/admin/login" });
+                }}
                 className="flex h-9 w-9 items-center justify-center rounded-full border bg-card text-muted-foreground hover:bg-muted"
                 aria-label="Sign out"
               >

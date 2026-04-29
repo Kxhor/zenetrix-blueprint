@@ -20,7 +20,10 @@ export const Route = createRootRoute({
           "Zenetrix is a financial identity verification platform for regulated Indian financial services. Issue, hold and share KYC credentials with bank-grade security.",
       },
       { property: "og:title", content: "Zenetrix — Trusted financial identity" },
-      { property: "og:description", content: "KYC and re-KYC for regulated Indian financial services." },
+      {
+        property: "og:description",
+        content: "KYC and re-KYC for regulated Indian financial services.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],

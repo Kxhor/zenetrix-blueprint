@@ -1,7 +1,18 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "tanstack-start-app",
+  "name": "zenetrix-app",
   "compatibility_date": "2025-09-24",
   "compatibility_flags": ["nodejs_compat"],
-  "main": "@tanstack/react-start/server-entry",
+  "main": "./src/api-worker.ts",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "zenetrix-db",
+      "database_id": "local-db-zenetrix",
+      "migrations_dir": "./migrations",
+    },
+  ],
+  "vars": {
+    "JWT_SECRET": "dev-secret-do-not-use-in-production-32chars!",
+  },
 }

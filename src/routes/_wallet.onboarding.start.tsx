@@ -17,18 +17,32 @@ function OnboardingStart() {
           <ShieldCheck className="h-3 w-3 text-success" /> Takes about 60 seconds
         </span>
         <h1 className="mt-3 font-display text-3xl font-semibold leading-tight tracking-tight">
-          Let's set up your<br />verified identity.
+          Let's set up your
+          <br />
+          verified identity.
         </h1>
         <p className="mt-2 text-muted-foreground">
-          We'll verify a few documents and a quick liveness check. Your data stays encrypted on
-          your device.
+          We'll verify a few documents and a quick liveness check. Your data stays encrypted on your
+          device.
         </p>
 
         <ul className="mt-7 space-y-3">
           {[
-            { icon: FileText, title: "Identity documents", body: "Aadhaar and PAN. Optional address proof." },
-            { icon: ScanFace, title: "Quick liveness check", body: "Look at the camera, blink, turn — we'll guide you." },
-            { icon: Fingerprint, title: "Issue your credential", body: "Stored only in your wallet. Share when you choose to." },
+            {
+              icon: FileText,
+              title: "Identity documents",
+              body: "Aadhaar and PAN. Optional address proof.",
+            },
+            {
+              icon: ScanFace,
+              title: "Quick liveness check",
+              body: "Look at the camera, blink, turn — we'll guide you.",
+            },
+            {
+              icon: Fingerprint,
+              title: "Issue your credential",
+              body: "Stored only in your wallet. Share when you choose to.",
+            },
           ].map((s, i) => (
             <motion.li
               key={s.title}

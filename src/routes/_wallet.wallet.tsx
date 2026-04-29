@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowRight, ShieldCheck, Plus, RefreshCcw } from "lucide-react";
-import { api } from "@/mocks/api";
+import { api } from "@/lib/api-client";
 import { CredentialCard } from "@/components/credential-card";
 import { WalletPageHeader } from "./_wallet";
 import { Button } from "@/components/ui/button";
@@ -26,21 +26,17 @@ function WalletPage() {
 
   return (
     <div className="space-y-6">
-      <WalletPageHeader
-        title="Your wallet"
-        subtitle="Verified credentials at your fingertips."
-      />
+      <WalletPageHeader title="Your wallet" subtitle="Verified credentials at your fingertips." />
 
       {/* Greeting + quick stats */}
       <div className="px-5">
         <div className="grid grid-cols-3 gap-2">
           <Stat label="Credentials" value={String(data?.length ?? 0)} />
-          <Stat label="Active grants" value={String(consents?.filter((c) => c.status === "active").length ?? 0)} />
           <Stat
-            label="Pending"
-            value={String(pending)}
-            highlight={pending > 0}
+            label="Active grants"
+            value={String(consents?.filter((c) => c.status === "active").length ?? 0)}
           />
+          <Stat label="Pending" value={String(pending)} highlight={pending > 0} />
         </div>
       </div>
 
@@ -78,7 +74,9 @@ function WalletPage() {
               <span className="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 animate-pulse rounded-full bg-accent ring-2 ring-card" />
             </span>
             <div>
-              <p className="text-sm font-semibold">{pending} pending consent {pending === 1 ? "request" : "requests"}</p>
+              <p className="text-sm font-semibold">
+                {pending} pending consent {pending === 1 ? "request" : "requests"}
+              </p>
               <p className="text-xs text-muted-foreground">Review before they expire</p>
             </div>
           </div>

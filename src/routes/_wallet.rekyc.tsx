@@ -22,7 +22,14 @@ function ReKyc() {
           <div className="flex items-center gap-5">
             <div className="relative h-24 w-24">
               <svg viewBox="0 0 100 100" className="-rotate-90">
-                <circle cx="50" cy="50" r="44" fill="none" stroke="oklch(0.92 0.008 250)" strokeWidth="8" />
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="44"
+                  fill="none"
+                  stroke="oklch(0.92 0.008 250)"
+                  strokeWidth="8"
+                />
                 <circle
                   cx="50"
                   cy="50"
@@ -42,12 +49,16 @@ function ReKyc() {
             <div>
               <p className="text-xs uppercase tracking-wider text-muted-foreground">Status</p>
               <p className="font-display text-xl font-semibold">All up to date</p>
-              <p className="mt-1 text-xs text-muted-foreground">Last verified {formatDate(lastDone)}</p>
+              <p className="mt-1 text-xs text-muted-foreground">
+                Last verified {formatDate(lastDone)}
+              </p>
             </div>
           </div>
           <div className="mt-5 grid grid-cols-2 gap-3 text-xs">
             <div className="rounded-xl bg-muted/50 p-3">
-              <p className="text-[10px] uppercase tracking-wider text-muted-foreground">Last completed</p>
+              <p className="text-[10px] uppercase tracking-wider text-muted-foreground">
+                Last completed
+              </p>
               <p className="mt-0.5 text-sm font-medium">{formatDate(lastDone)}</p>
             </div>
             <div className="rounded-xl bg-muted/50 p-3">
@@ -77,7 +88,8 @@ function ReKyc() {
       <div className="px-5">
         <Button asChild size="lg" className="h-12 w-full rounded-full text-base">
           <Link to="/onboarding/start">
-            <RefreshCcw className="mr-1 h-4 w-4" /> Start re-KYC now <ArrowRight className="ml-1 h-4 w-4" />
+            <RefreshCcw className="mr-1 h-4 w-4" /> Start re-KYC now{" "}
+            <ArrowRight className="ml-1 h-4 w-4" />
           </Link>
         </Button>
       </div>

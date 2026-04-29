@@ -2,7 +2,7 @@ import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { Download, Search } from "lucide-react";
-import { api } from "@/mocks/api";
+import { api } from "@/lib/api-client";
 import { AdminPageHeader } from "./_admin";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -35,7 +35,9 @@ function Audit() {
     const a = document.createElement("a");
     a.href = url;
     a.download = `zenetrix-audit-${new Date().toISOString().slice(0, 10)}.csv`;
+    document.body.appendChild(a);
     a.click();
+    document.body.removeChild(a);
     URL.revokeObjectURL(url);
     toast.success("Audit log exported");
   }
@@ -54,7 +56,12 @@ function Audit() {
       <div className="space-y-4 p-6">
         <div className="relative max-w-md">
           <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-          <Input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search actor, action or resource…" className="h-9 pl-9" />
+          <Input
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+            placeholder="Search actor, action or resource…"
+            className="h-9 pl-9"
+          />
         </div>
         <div className="overflow-hidden rounded-2xl border bg-card shadow-card">
           <div className="overflow-x-auto">
@@ -72,11 +79,15 @@ function Audit() {
               <tbody>
                 {rows.map((r) => (
                   <tr key={r.id} className="border-t hover:bg-muted/30">
-                    <td className="px-4 py-3 text-xs text-muted-foreground">{formatDateTime(r.at)}</td>
+                    <td className="px-4 py-3 text-xs text-muted-foreground">
+                      {formatDateTime(r.at)}
+                    </td>
                     <td className="px-4 py-3 font-medium">{r.actor}</td>
                     <td className="px-4 py-3 font-mono text-xs">{r.action}</td>
                     <td className="px-4 py-3 font-mono text-xs">{r.resource}</td>
-                    <td className="px-4 py-3 font-mono text-xs text-muted-foreground">{shortHash(r.hash, 6)}</td>
+                    <td className="px-4 py-3 font-mono text-xs text-muted-foreground">
+                      {shortHash(r.hash, 6)}
+                    </td>
                     <td className="px-4 py-3 font-mono text-xs text-muted-foreground">{r.ip}</td>
                   </tr>
                 ))}

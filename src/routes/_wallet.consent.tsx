@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Building2, ArrowRight, Clock, ShieldCheck } from "lucide-react";
-import { api } from "@/mocks/api";
+import { api } from "@/lib/api-client";
 import { WalletPageHeader } from "./_wallet";
 import { StatusBadge } from "@/components/status-badge";
 import { SkeletonRow } from "@/components/skeletons";
@@ -50,18 +50,29 @@ function ConsentPage() {
       </div>
 
       <div className="space-y-3 px-5">
-        {isLoading && <><SkeletonRow /><SkeletonRow /></>}
+        {isLoading && (
+          <>
+            <SkeletonRow />
+            <SkeletonRow />
+          </>
+        )}
         {!isLoading && pending.length === 0 && (
           <div className="rounded-2xl border bg-card p-8 text-center shadow-card">
             <ShieldCheck className="mx-auto h-7 w-7 text-success" />
             <p className="mt-3 text-sm font-medium">No pending requests</p>
-            <p className="mt-1 text-xs text-muted-foreground">You'll see new consent requests here.</p>
+            <p className="mt-1 text-xs text-muted-foreground">
+              You'll see new consent requests here.
+            </p>
           </div>
         )}
         {pending.map((c) => (
           <div key={c.id} className="rounded-2xl border bg-card p-4 shadow-card">
             <div className="flex items-start justify-between gap-3">
-              <Link to="/consent/$id" params={{ id: c.id }} className="flex flex-1 items-start gap-3">
+              <Link
+                to="/consent/$id"
+                params={{ id: c.id }}
+                className="flex flex-1 items-start gap-3"
+              >
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/8 text-primary">
                   <Building2 className="h-5 w-5" />
                 </div>
@@ -70,12 +81,17 @@ function ConsentPage() {
                   <p className="mt-0.5 text-xs text-muted-foreground">{c.purpose}</p>
                   <div className="mt-2 flex flex-wrap gap-1.5">
                     {c.scope.slice(0, 3).map((s) => (
-                      <span key={s} className="rounded-full border bg-background px-2 py-0.5 text-[10px] text-muted-foreground">
+                      <span
+                        key={s}
+                        className="rounded-full border bg-background px-2 py-0.5 text-[10px] text-muted-foreground"
+                      >
                         {s}
                       </span>
                     ))}
                     {c.scope.length > 3 && (
-                      <span className="text-[10px] text-muted-foreground">+{c.scope.length - 3}</span>
+                      <span className="text-[10px] text-muted-foreground">
+                        +{c.scope.length - 3}
+                      </span>
                     )}
                   </div>
                 </div>
@@ -84,7 +100,8 @@ function ConsentPage() {
             </div>
             <div className="mt-3 flex items-center justify-between text-[11px] text-muted-foreground">
               <span className="inline-flex items-center gap-1">
-                <Clock className="h-3 w-3" /> Asked {formatRelativeTime(c.requestedAt)} · {c.duration}
+                <Clock className="h-3 w-3" /> Asked {formatRelativeTime(c.requestedAt)} ·{" "}
+                {c.duration}
               </span>
             </div>
             <div className="mt-3 grid grid-cols-2 gap-2">

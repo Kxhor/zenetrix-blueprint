@@ -9,38 +9,135 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as RegisterRouteImport } from './routes/register'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as WalletRouteImport } from './routes/_wallet'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminLoginRouteImport } from './routes/admin.login'
+import { Route as WalletWalletRouteImport } from './routes/_wallet.wallet'
+import { Route as WalletWalletCredentialIdRouteImport } from './routes/_wallet.wallet.credential.$id'
 
+const RegisterRoute = RegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WalletRoute = WalletRouteImport.update({
+  id: '/_wallet',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/admin/login',
+  path: '/admin/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WalletWalletRoute = WalletWalletRouteImport.update({
+  id: '/wallet',
+  path: '/wallet',
+  getParentRoute: () => WalletRoute,
+} as any)
+const WalletWalletCredentialIdRoute =
+  WalletWalletCredentialIdRouteImport.update({
+    id: '/credential/$id',
+    path: '/credential/$id',
+    getParentRoute: () => WalletWalletRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/register': typeof RegisterRoute
+  '/wallet': typeof WalletWalletRouteWithChildren
+  '/admin/login': typeof AdminLoginRoute
+  '/wallet/credential/$id': typeof WalletWalletCredentialIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/register': typeof RegisterRoute
+  '/wallet': typeof WalletWalletRouteWithChildren
+  '/admin/login': typeof AdminLoginRoute
+  '/wallet/credential/$id': typeof WalletWalletCredentialIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_wallet': typeof WalletRouteWithChildren
+  '/login': typeof LoginRoute
+  '/register': typeof RegisterRoute
+  '/_wallet/wallet': typeof WalletWalletRouteWithChildren
+  '/admin/login': typeof AdminLoginRoute
+  '/_wallet/wallet/credential/$id': typeof WalletWalletCredentialIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/register'
+    | '/wallet'
+    | '/admin/login'
+    | '/wallet/credential/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/login'
+    | '/register'
+    | '/wallet'
+    | '/admin/login'
+    | '/wallet/credential/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/_wallet'
+    | '/login'
+    | '/register'
+    | '/_wallet/wallet'
+    | '/admin/login'
+    | '/_wallet/wallet/credential/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  WalletRoute: typeof WalletRouteWithChildren
+  LoginRoute: typeof LoginRoute
+  RegisterRoute: typeof RegisterRoute
+  AdminLoginRoute: typeof AdminLoginRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_wallet': {
+      id: '/_wallet'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof WalletRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,12 +145,69 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/login': {
+      id: '/admin/login'
+      path: '/admin/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_wallet/wallet': {
+      id: '/_wallet/wallet'
+      path: '/wallet'
+      fullPath: '/wallet'
+      preLoaderRoute: typeof WalletWalletRouteImport
+      parentRoute: typeof WalletRoute
+    }
+    '/_wallet/wallet/credential/$id': {
+      id: '/_wallet/wallet/credential/$id'
+      path: '/credential/$id'
+      fullPath: '/wallet/credential/$id'
+      preLoaderRoute: typeof WalletWalletCredentialIdRouteImport
+      parentRoute: typeof WalletWalletRoute
+    }
   }
 }
 
+interface WalletWalletRouteChildren {
+  WalletWalletCredentialIdRoute: typeof WalletWalletCredentialIdRoute
+}
+
+const WalletWalletRouteChildren: WalletWalletRouteChildren = {
+  WalletWalletCredentialIdRoute: WalletWalletCredentialIdRoute,
+}
+
+const WalletWalletRouteWithChildren = WalletWalletRoute._addFileChildren(
+  WalletWalletRouteChildren,
+)
+
+interface WalletRouteChildren {
+  WalletWalletRoute: typeof WalletWalletRouteWithChildren
+}
+
+const WalletRouteChildren: WalletRouteChildren = {
+  WalletWalletRoute: WalletWalletRouteWithChildren,
+}
+
+const WalletRouteWithChildren =
+  WalletRoute._addFileChildren(WalletRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  WalletRoute: WalletRouteWithChildren,
+  LoginRoute: LoginRoute,
+  RegisterRoute: RegisterRoute,
+  AdminLoginRoute: AdminLoginRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}

@@ -15,11 +15,18 @@ import { Route as WalletRouteImport } from './routes/_wallet'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
 import { Route as WalletWalletRouteImport } from './routes/_wallet.wallet'
+import { Route as WalletSettingsRouteImport } from './routes/_wallet.settings'
+import { Route as WalletRekycRouteImport } from './routes/_wallet.rekyc'
+import { Route as WalletHelpRouteImport } from './routes/_wallet.help'
+import { Route as WalletConsentRouteImport } from './routes/_wallet.consent'
+import { Route as WalletActivityRouteImport } from './routes/_wallet.activity'
 import { Route as WalletOnboardingSuccessRouteImport } from './routes/_wallet.onboarding.success'
 import { Route as WalletOnboardingStartRouteImport } from './routes/_wallet.onboarding.start'
 import { Route as WalletOnboardingReviewRouteImport } from './routes/_wallet.onboarding.review'
 import { Route as WalletOnboardingLivenessRouteImport } from './routes/_wallet.onboarding.liveness'
 import { Route as WalletOnboardingIdentityRouteImport } from './routes/_wallet.onboarding.identity'
+import { Route as WalletConsentActiveRouteImport } from './routes/_wallet.consent.active'
+import { Route as WalletConsentIdRouteImport } from './routes/_wallet.consent.$id'
 import { Route as WalletWalletCredentialIdRouteImport } from './routes/_wallet.wallet.credential.$id'
 
 const RegisterRoute = RegisterRouteImport.update({
@@ -51,6 +58,31 @@ const WalletWalletRoute = WalletWalletRouteImport.update({
   path: '/wallet',
   getParentRoute: () => WalletRoute,
 } as any)
+const WalletSettingsRoute = WalletSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => WalletRoute,
+} as any)
+const WalletRekycRoute = WalletRekycRouteImport.update({
+  id: '/rekyc',
+  path: '/rekyc',
+  getParentRoute: () => WalletRoute,
+} as any)
+const WalletHelpRoute = WalletHelpRouteImport.update({
+  id: '/help',
+  path: '/help',
+  getParentRoute: () => WalletRoute,
+} as any)
+const WalletConsentRoute = WalletConsentRouteImport.update({
+  id: '/consent',
+  path: '/consent',
+  getParentRoute: () => WalletRoute,
+} as any)
+const WalletActivityRoute = WalletActivityRouteImport.update({
+  id: '/activity',
+  path: '/activity',
+  getParentRoute: () => WalletRoute,
+} as any)
 const WalletOnboardingSuccessRoute = WalletOnboardingSuccessRouteImport.update({
   id: '/onboarding/success',
   path: '/onboarding/success',
@@ -78,6 +110,16 @@ const WalletOnboardingIdentityRoute =
     path: '/onboarding/identity',
     getParentRoute: () => WalletRoute,
   } as any)
+const WalletConsentActiveRoute = WalletConsentActiveRouteImport.update({
+  id: '/active',
+  path: '/active',
+  getParentRoute: () => WalletConsentRoute,
+} as any)
+const WalletConsentIdRoute = WalletConsentIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => WalletConsentRoute,
+} as any)
 const WalletWalletCredentialIdRoute =
   WalletWalletCredentialIdRouteImport.update({
     id: '/credential/$id',
@@ -89,8 +131,15 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/activity': typeof WalletActivityRoute
+  '/consent': typeof WalletConsentRouteWithChildren
+  '/help': typeof WalletHelpRoute
+  '/rekyc': typeof WalletRekycRoute
+  '/settings': typeof WalletSettingsRoute
   '/wallet': typeof WalletWalletRouteWithChildren
   '/admin/login': typeof AdminLoginRoute
+  '/consent/$id': typeof WalletConsentIdRoute
+  '/consent/active': typeof WalletConsentActiveRoute
   '/onboarding/identity': typeof WalletOnboardingIdentityRoute
   '/onboarding/liveness': typeof WalletOnboardingLivenessRoute
   '/onboarding/review': typeof WalletOnboardingReviewRoute
@@ -102,8 +151,15 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/activity': typeof WalletActivityRoute
+  '/consent': typeof WalletConsentRouteWithChildren
+  '/help': typeof WalletHelpRoute
+  '/rekyc': typeof WalletRekycRoute
+  '/settings': typeof WalletSettingsRoute
   '/wallet': typeof WalletWalletRouteWithChildren
   '/admin/login': typeof AdminLoginRoute
+  '/consent/$id': typeof WalletConsentIdRoute
+  '/consent/active': typeof WalletConsentActiveRoute
   '/onboarding/identity': typeof WalletOnboardingIdentityRoute
   '/onboarding/liveness': typeof WalletOnboardingLivenessRoute
   '/onboarding/review': typeof WalletOnboardingReviewRoute
@@ -117,8 +173,15 @@ export interface FileRoutesById {
   '/_wallet': typeof WalletRouteWithChildren
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/_wallet/activity': typeof WalletActivityRoute
+  '/_wallet/consent': typeof WalletConsentRouteWithChildren
+  '/_wallet/help': typeof WalletHelpRoute
+  '/_wallet/rekyc': typeof WalletRekycRoute
+  '/_wallet/settings': typeof WalletSettingsRoute
   '/_wallet/wallet': typeof WalletWalletRouteWithChildren
   '/admin/login': typeof AdminLoginRoute
+  '/_wallet/consent/$id': typeof WalletConsentIdRoute
+  '/_wallet/consent/active': typeof WalletConsentActiveRoute
   '/_wallet/onboarding/identity': typeof WalletOnboardingIdentityRoute
   '/_wallet/onboarding/liveness': typeof WalletOnboardingLivenessRoute
   '/_wallet/onboarding/review': typeof WalletOnboardingReviewRoute
@@ -132,8 +195,15 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/register'
+    | '/activity'
+    | '/consent'
+    | '/help'
+    | '/rekyc'
+    | '/settings'
     | '/wallet'
     | '/admin/login'
+    | '/consent/$id'
+    | '/consent/active'
     | '/onboarding/identity'
     | '/onboarding/liveness'
     | '/onboarding/review'
@@ -145,8 +215,15 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/register'
+    | '/activity'
+    | '/consent'
+    | '/help'
+    | '/rekyc'
+    | '/settings'
     | '/wallet'
     | '/admin/login'
+    | '/consent/$id'
+    | '/consent/active'
     | '/onboarding/identity'
     | '/onboarding/liveness'
     | '/onboarding/review'
@@ -159,8 +236,15 @@ export interface FileRouteTypes {
     | '/_wallet'
     | '/login'
     | '/register'
+    | '/_wallet/activity'
+    | '/_wallet/consent'
+    | '/_wallet/help'
+    | '/_wallet/rekyc'
+    | '/_wallet/settings'
     | '/_wallet/wallet'
     | '/admin/login'
+    | '/_wallet/consent/$id'
+    | '/_wallet/consent/active'
     | '/_wallet/onboarding/identity'
     | '/_wallet/onboarding/liveness'
     | '/_wallet/onboarding/review'
@@ -221,6 +305,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WalletWalletRouteImport
       parentRoute: typeof WalletRoute
     }
+    '/_wallet/settings': {
+      id: '/_wallet/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof WalletSettingsRouteImport
+      parentRoute: typeof WalletRoute
+    }
+    '/_wallet/rekyc': {
+      id: '/_wallet/rekyc'
+      path: '/rekyc'
+      fullPath: '/rekyc'
+      preLoaderRoute: typeof WalletRekycRouteImport
+      parentRoute: typeof WalletRoute
+    }
+    '/_wallet/help': {
+      id: '/_wallet/help'
+      path: '/help'
+      fullPath: '/help'
+      preLoaderRoute: typeof WalletHelpRouteImport
+      parentRoute: typeof WalletRoute
+    }
+    '/_wallet/consent': {
+      id: '/_wallet/consent'
+      path: '/consent'
+      fullPath: '/consent'
+      preLoaderRoute: typeof WalletConsentRouteImport
+      parentRoute: typeof WalletRoute
+    }
+    '/_wallet/activity': {
+      id: '/_wallet/activity'
+      path: '/activity'
+      fullPath: '/activity'
+      preLoaderRoute: typeof WalletActivityRouteImport
+      parentRoute: typeof WalletRoute
+    }
     '/_wallet/onboarding/success': {
       id: '/_wallet/onboarding/success'
       path: '/onboarding/success'
@@ -256,6 +375,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WalletOnboardingIdentityRouteImport
       parentRoute: typeof WalletRoute
     }
+    '/_wallet/consent/active': {
+      id: '/_wallet/consent/active'
+      path: '/active'
+      fullPath: '/consent/active'
+      preLoaderRoute: typeof WalletConsentActiveRouteImport
+      parentRoute: typeof WalletConsentRoute
+    }
+    '/_wallet/consent/$id': {
+      id: '/_wallet/consent/$id'
+      path: '/$id'
+      fullPath: '/consent/$id'
+      preLoaderRoute: typeof WalletConsentIdRouteImport
+      parentRoute: typeof WalletConsentRoute
+    }
     '/_wallet/wallet/credential/$id': {
       id: '/_wallet/wallet/credential/$id'
       path: '/credential/$id'
@@ -265,6 +398,20 @@ declare module '@tanstack/react-router' {
     }
   }
 }
+
+interface WalletConsentRouteChildren {
+  WalletConsentIdRoute: typeof WalletConsentIdRoute
+  WalletConsentActiveRoute: typeof WalletConsentActiveRoute
+}
+
+const WalletConsentRouteChildren: WalletConsentRouteChildren = {
+  WalletConsentIdRoute: WalletConsentIdRoute,
+  WalletConsentActiveRoute: WalletConsentActiveRoute,
+}
+
+const WalletConsentRouteWithChildren = WalletConsentRoute._addFileChildren(
+  WalletConsentRouteChildren,
+)
 
 interface WalletWalletRouteChildren {
   WalletWalletCredentialIdRoute: typeof WalletWalletCredentialIdRoute
@@ -279,6 +426,11 @@ const WalletWalletRouteWithChildren = WalletWalletRoute._addFileChildren(
 )
 
 interface WalletRouteChildren {
+  WalletActivityRoute: typeof WalletActivityRoute
+  WalletConsentRoute: typeof WalletConsentRouteWithChildren
+  WalletHelpRoute: typeof WalletHelpRoute
+  WalletRekycRoute: typeof WalletRekycRoute
+  WalletSettingsRoute: typeof WalletSettingsRoute
   WalletWalletRoute: typeof WalletWalletRouteWithChildren
   WalletOnboardingIdentityRoute: typeof WalletOnboardingIdentityRoute
   WalletOnboardingLivenessRoute: typeof WalletOnboardingLivenessRoute
@@ -288,6 +440,11 @@ interface WalletRouteChildren {
 }
 
 const WalletRouteChildren: WalletRouteChildren = {
+  WalletActivityRoute: WalletActivityRoute,
+  WalletConsentRoute: WalletConsentRouteWithChildren,
+  WalletHelpRoute: WalletHelpRoute,
+  WalletRekycRoute: WalletRekycRoute,
+  WalletSettingsRoute: WalletSettingsRoute,
   WalletWalletRoute: WalletWalletRouteWithChildren,
   WalletOnboardingIdentityRoute: WalletOnboardingIdentityRoute,
   WalletOnboardingLivenessRoute: WalletOnboardingLivenessRoute,
@@ -309,12 +466,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-  }
-}

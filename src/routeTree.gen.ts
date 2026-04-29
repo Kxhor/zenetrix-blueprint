@@ -9,38 +9,380 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as RegisterRouteImport } from './routes/register'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as WalletRouteImport } from './routes/_wallet'
+import { Route as AdminRouteImport } from './routes/_admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminLoginRouteImport } from './routes/admin.login'
+import { Route as WalletWalletRouteImport } from './routes/_wallet.wallet'
+import { Route as WalletSettingsRouteImport } from './routes/_wallet.settings'
+import { Route as WalletRekycRouteImport } from './routes/_wallet.rekyc'
+import { Route as WalletHelpRouteImport } from './routes/_wallet.help'
+import { Route as WalletConsentRouteImport } from './routes/_wallet.consent'
+import { Route as WalletActivityRouteImport } from './routes/_wallet.activity'
+import { Route as WalletOnboardingSuccessRouteImport } from './routes/_wallet.onboarding.success'
+import { Route as WalletOnboardingStartRouteImport } from './routes/_wallet.onboarding.start'
+import { Route as WalletOnboardingReviewRouteImport } from './routes/_wallet.onboarding.review'
+import { Route as WalletOnboardingLivenessRouteImport } from './routes/_wallet.onboarding.liveness'
+import { Route as WalletOnboardingIdentityRouteImport } from './routes/_wallet.onboarding.identity'
+import { Route as WalletConsentActiveRouteImport } from './routes/_wallet.consent.active'
+import { Route as WalletConsentIdRouteImport } from './routes/_wallet.consent.$id'
+import { Route as AdminAdminSettingsRouteImport } from './routes/_admin.admin.settings'
+import { Route as AdminAdminSessionsRouteImport } from './routes/_admin.admin.sessions'
+import { Route as AdminAdminDashboardRouteImport } from './routes/_admin.admin.dashboard'
+import { Route as AdminAdminCredentialsRouteImport } from './routes/_admin.admin.credentials'
+import { Route as AdminAdminCasesRouteImport } from './routes/_admin.admin.cases'
+import { Route as AdminAdminAuditRouteImport } from './routes/_admin.admin.audit'
+import { Route as WalletWalletCredentialIdRouteImport } from './routes/_wallet.wallet.credential.$id'
+import { Route as AdminAdminSessionsIdRouteImport } from './routes/_admin.admin.sessions.$id'
 
+const RegisterRoute = RegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WalletRoute = WalletRouteImport.update({
+  id: '/_wallet',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/_admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/admin/login',
+  path: '/admin/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WalletWalletRoute = WalletWalletRouteImport.update({
+  id: '/wallet',
+  path: '/wallet',
+  getParentRoute: () => WalletRoute,
+} as any)
+const WalletSettingsRoute = WalletSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => WalletRoute,
+} as any)
+const WalletRekycRoute = WalletRekycRouteImport.update({
+  id: '/rekyc',
+  path: '/rekyc',
+  getParentRoute: () => WalletRoute,
+} as any)
+const WalletHelpRoute = WalletHelpRouteImport.update({
+  id: '/help',
+  path: '/help',
+  getParentRoute: () => WalletRoute,
+} as any)
+const WalletConsentRoute = WalletConsentRouteImport.update({
+  id: '/consent',
+  path: '/consent',
+  getParentRoute: () => WalletRoute,
+} as any)
+const WalletActivityRoute = WalletActivityRouteImport.update({
+  id: '/activity',
+  path: '/activity',
+  getParentRoute: () => WalletRoute,
+} as any)
+const WalletOnboardingSuccessRoute = WalletOnboardingSuccessRouteImport.update({
+  id: '/onboarding/success',
+  path: '/onboarding/success',
+  getParentRoute: () => WalletRoute,
+} as any)
+const WalletOnboardingStartRoute = WalletOnboardingStartRouteImport.update({
+  id: '/onboarding/start',
+  path: '/onboarding/start',
+  getParentRoute: () => WalletRoute,
+} as any)
+const WalletOnboardingReviewRoute = WalletOnboardingReviewRouteImport.update({
+  id: '/onboarding/review',
+  path: '/onboarding/review',
+  getParentRoute: () => WalletRoute,
+} as any)
+const WalletOnboardingLivenessRoute =
+  WalletOnboardingLivenessRouteImport.update({
+    id: '/onboarding/liveness',
+    path: '/onboarding/liveness',
+    getParentRoute: () => WalletRoute,
+  } as any)
+const WalletOnboardingIdentityRoute =
+  WalletOnboardingIdentityRouteImport.update({
+    id: '/onboarding/identity',
+    path: '/onboarding/identity',
+    getParentRoute: () => WalletRoute,
+  } as any)
+const WalletConsentActiveRoute = WalletConsentActiveRouteImport.update({
+  id: '/active',
+  path: '/active',
+  getParentRoute: () => WalletConsentRoute,
+} as any)
+const WalletConsentIdRoute = WalletConsentIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => WalletConsentRoute,
+} as any)
+const AdminAdminSettingsRoute = AdminAdminSettingsRouteImport.update({
+  id: '/admin/settings',
+  path: '/admin/settings',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAdminSessionsRoute = AdminAdminSessionsRouteImport.update({
+  id: '/admin/sessions',
+  path: '/admin/sessions',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAdminDashboardRoute = AdminAdminDashboardRouteImport.update({
+  id: '/admin/dashboard',
+  path: '/admin/dashboard',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAdminCredentialsRoute = AdminAdminCredentialsRouteImport.update({
+  id: '/admin/credentials',
+  path: '/admin/credentials',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAdminCasesRoute = AdminAdminCasesRouteImport.update({
+  id: '/admin/cases',
+  path: '/admin/cases',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAdminAuditRoute = AdminAdminAuditRouteImport.update({
+  id: '/admin/audit',
+  path: '/admin/audit',
+  getParentRoute: () => AdminRoute,
+} as any)
+const WalletWalletCredentialIdRoute =
+  WalletWalletCredentialIdRouteImport.update({
+    id: '/credential/$id',
+    path: '/credential/$id',
+    getParentRoute: () => WalletWalletRoute,
+  } as any)
+const AdminAdminSessionsIdRoute = AdminAdminSessionsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => AdminAdminSessionsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/register': typeof RegisterRoute
+  '/activity': typeof WalletActivityRoute
+  '/consent': typeof WalletConsentRouteWithChildren
+  '/help': typeof WalletHelpRoute
+  '/rekyc': typeof WalletRekycRoute
+  '/settings': typeof WalletSettingsRoute
+  '/wallet': typeof WalletWalletRouteWithChildren
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/audit': typeof AdminAdminAuditRoute
+  '/admin/cases': typeof AdminAdminCasesRoute
+  '/admin/credentials': typeof AdminAdminCredentialsRoute
+  '/admin/dashboard': typeof AdminAdminDashboardRoute
+  '/admin/sessions': typeof AdminAdminSessionsRouteWithChildren
+  '/admin/settings': typeof AdminAdminSettingsRoute
+  '/consent/$id': typeof WalletConsentIdRoute
+  '/consent/active': typeof WalletConsentActiveRoute
+  '/onboarding/identity': typeof WalletOnboardingIdentityRoute
+  '/onboarding/liveness': typeof WalletOnboardingLivenessRoute
+  '/onboarding/review': typeof WalletOnboardingReviewRoute
+  '/onboarding/start': typeof WalletOnboardingStartRoute
+  '/onboarding/success': typeof WalletOnboardingSuccessRoute
+  '/admin/sessions/$id': typeof AdminAdminSessionsIdRoute
+  '/wallet/credential/$id': typeof WalletWalletCredentialIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/register': typeof RegisterRoute
+  '/activity': typeof WalletActivityRoute
+  '/consent': typeof WalletConsentRouteWithChildren
+  '/help': typeof WalletHelpRoute
+  '/rekyc': typeof WalletRekycRoute
+  '/settings': typeof WalletSettingsRoute
+  '/wallet': typeof WalletWalletRouteWithChildren
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/audit': typeof AdminAdminAuditRoute
+  '/admin/cases': typeof AdminAdminCasesRoute
+  '/admin/credentials': typeof AdminAdminCredentialsRoute
+  '/admin/dashboard': typeof AdminAdminDashboardRoute
+  '/admin/sessions': typeof AdminAdminSessionsRouteWithChildren
+  '/admin/settings': typeof AdminAdminSettingsRoute
+  '/consent/$id': typeof WalletConsentIdRoute
+  '/consent/active': typeof WalletConsentActiveRoute
+  '/onboarding/identity': typeof WalletOnboardingIdentityRoute
+  '/onboarding/liveness': typeof WalletOnboardingLivenessRoute
+  '/onboarding/review': typeof WalletOnboardingReviewRoute
+  '/onboarding/start': typeof WalletOnboardingStartRoute
+  '/onboarding/success': typeof WalletOnboardingSuccessRoute
+  '/admin/sessions/$id': typeof AdminAdminSessionsIdRoute
+  '/wallet/credential/$id': typeof WalletWalletCredentialIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_admin': typeof AdminRouteWithChildren
+  '/_wallet': typeof WalletRouteWithChildren
+  '/login': typeof LoginRoute
+  '/register': typeof RegisterRoute
+  '/_wallet/activity': typeof WalletActivityRoute
+  '/_wallet/consent': typeof WalletConsentRouteWithChildren
+  '/_wallet/help': typeof WalletHelpRoute
+  '/_wallet/rekyc': typeof WalletRekycRoute
+  '/_wallet/settings': typeof WalletSettingsRoute
+  '/_wallet/wallet': typeof WalletWalletRouteWithChildren
+  '/admin/login': typeof AdminLoginRoute
+  '/_admin/admin/audit': typeof AdminAdminAuditRoute
+  '/_admin/admin/cases': typeof AdminAdminCasesRoute
+  '/_admin/admin/credentials': typeof AdminAdminCredentialsRoute
+  '/_admin/admin/dashboard': typeof AdminAdminDashboardRoute
+  '/_admin/admin/sessions': typeof AdminAdminSessionsRouteWithChildren
+  '/_admin/admin/settings': typeof AdminAdminSettingsRoute
+  '/_wallet/consent/$id': typeof WalletConsentIdRoute
+  '/_wallet/consent/active': typeof WalletConsentActiveRoute
+  '/_wallet/onboarding/identity': typeof WalletOnboardingIdentityRoute
+  '/_wallet/onboarding/liveness': typeof WalletOnboardingLivenessRoute
+  '/_wallet/onboarding/review': typeof WalletOnboardingReviewRoute
+  '/_wallet/onboarding/start': typeof WalletOnboardingStartRoute
+  '/_wallet/onboarding/success': typeof WalletOnboardingSuccessRoute
+  '/_admin/admin/sessions/$id': typeof AdminAdminSessionsIdRoute
+  '/_wallet/wallet/credential/$id': typeof WalletWalletCredentialIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/register'
+    | '/activity'
+    | '/consent'
+    | '/help'
+    | '/rekyc'
+    | '/settings'
+    | '/wallet'
+    | '/admin/login'
+    | '/admin/audit'
+    | '/admin/cases'
+    | '/admin/credentials'
+    | '/admin/dashboard'
+    | '/admin/sessions'
+    | '/admin/settings'
+    | '/consent/$id'
+    | '/consent/active'
+    | '/onboarding/identity'
+    | '/onboarding/liveness'
+    | '/onboarding/review'
+    | '/onboarding/start'
+    | '/onboarding/success'
+    | '/admin/sessions/$id'
+    | '/wallet/credential/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/login'
+    | '/register'
+    | '/activity'
+    | '/consent'
+    | '/help'
+    | '/rekyc'
+    | '/settings'
+    | '/wallet'
+    | '/admin/login'
+    | '/admin/audit'
+    | '/admin/cases'
+    | '/admin/credentials'
+    | '/admin/dashboard'
+    | '/admin/sessions'
+    | '/admin/settings'
+    | '/consent/$id'
+    | '/consent/active'
+    | '/onboarding/identity'
+    | '/onboarding/liveness'
+    | '/onboarding/review'
+    | '/onboarding/start'
+    | '/onboarding/success'
+    | '/admin/sessions/$id'
+    | '/wallet/credential/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/_admin'
+    | '/_wallet'
+    | '/login'
+    | '/register'
+    | '/_wallet/activity'
+    | '/_wallet/consent'
+    | '/_wallet/help'
+    | '/_wallet/rekyc'
+    | '/_wallet/settings'
+    | '/_wallet/wallet'
+    | '/admin/login'
+    | '/_admin/admin/audit'
+    | '/_admin/admin/cases'
+    | '/_admin/admin/credentials'
+    | '/_admin/admin/dashboard'
+    | '/_admin/admin/sessions'
+    | '/_admin/admin/settings'
+    | '/_wallet/consent/$id'
+    | '/_wallet/consent/active'
+    | '/_wallet/onboarding/identity'
+    | '/_wallet/onboarding/liveness'
+    | '/_wallet/onboarding/review'
+    | '/_wallet/onboarding/start'
+    | '/_wallet/onboarding/success'
+    | '/_admin/admin/sessions/$id'
+    | '/_wallet/wallet/credential/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRouteWithChildren
+  WalletRoute: typeof WalletRouteWithChildren
+  LoginRoute: typeof LoginRoute
+  RegisterRoute: typeof RegisterRoute
+  AdminLoginRoute: typeof AdminLoginRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_wallet': {
+      id: '/_wallet'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof WalletRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_admin': {
+      id: '/_admin'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,21 +390,259 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/login': {
+      id: '/admin/login'
+      path: '/admin/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_wallet/wallet': {
+      id: '/_wallet/wallet'
+      path: '/wallet'
+      fullPath: '/wallet'
+      preLoaderRoute: typeof WalletWalletRouteImport
+      parentRoute: typeof WalletRoute
+    }
+    '/_wallet/settings': {
+      id: '/_wallet/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof WalletSettingsRouteImport
+      parentRoute: typeof WalletRoute
+    }
+    '/_wallet/rekyc': {
+      id: '/_wallet/rekyc'
+      path: '/rekyc'
+      fullPath: '/rekyc'
+      preLoaderRoute: typeof WalletRekycRouteImport
+      parentRoute: typeof WalletRoute
+    }
+    '/_wallet/help': {
+      id: '/_wallet/help'
+      path: '/help'
+      fullPath: '/help'
+      preLoaderRoute: typeof WalletHelpRouteImport
+      parentRoute: typeof WalletRoute
+    }
+    '/_wallet/consent': {
+      id: '/_wallet/consent'
+      path: '/consent'
+      fullPath: '/consent'
+      preLoaderRoute: typeof WalletConsentRouteImport
+      parentRoute: typeof WalletRoute
+    }
+    '/_wallet/activity': {
+      id: '/_wallet/activity'
+      path: '/activity'
+      fullPath: '/activity'
+      preLoaderRoute: typeof WalletActivityRouteImport
+      parentRoute: typeof WalletRoute
+    }
+    '/_wallet/onboarding/success': {
+      id: '/_wallet/onboarding/success'
+      path: '/onboarding/success'
+      fullPath: '/onboarding/success'
+      preLoaderRoute: typeof WalletOnboardingSuccessRouteImport
+      parentRoute: typeof WalletRoute
+    }
+    '/_wallet/onboarding/start': {
+      id: '/_wallet/onboarding/start'
+      path: '/onboarding/start'
+      fullPath: '/onboarding/start'
+      preLoaderRoute: typeof WalletOnboardingStartRouteImport
+      parentRoute: typeof WalletRoute
+    }
+    '/_wallet/onboarding/review': {
+      id: '/_wallet/onboarding/review'
+      path: '/onboarding/review'
+      fullPath: '/onboarding/review'
+      preLoaderRoute: typeof WalletOnboardingReviewRouteImport
+      parentRoute: typeof WalletRoute
+    }
+    '/_wallet/onboarding/liveness': {
+      id: '/_wallet/onboarding/liveness'
+      path: '/onboarding/liveness'
+      fullPath: '/onboarding/liveness'
+      preLoaderRoute: typeof WalletOnboardingLivenessRouteImport
+      parentRoute: typeof WalletRoute
+    }
+    '/_wallet/onboarding/identity': {
+      id: '/_wallet/onboarding/identity'
+      path: '/onboarding/identity'
+      fullPath: '/onboarding/identity'
+      preLoaderRoute: typeof WalletOnboardingIdentityRouteImport
+      parentRoute: typeof WalletRoute
+    }
+    '/_wallet/consent/active': {
+      id: '/_wallet/consent/active'
+      path: '/active'
+      fullPath: '/consent/active'
+      preLoaderRoute: typeof WalletConsentActiveRouteImport
+      parentRoute: typeof WalletConsentRoute
+    }
+    '/_wallet/consent/$id': {
+      id: '/_wallet/consent/$id'
+      path: '/$id'
+      fullPath: '/consent/$id'
+      preLoaderRoute: typeof WalletConsentIdRouteImport
+      parentRoute: typeof WalletConsentRoute
+    }
+    '/_admin/admin/settings': {
+      id: '/_admin/admin/settings'
+      path: '/admin/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminAdminSettingsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/admin/sessions': {
+      id: '/_admin/admin/sessions'
+      path: '/admin/sessions'
+      fullPath: '/admin/sessions'
+      preLoaderRoute: typeof AdminAdminSessionsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/admin/dashboard': {
+      id: '/_admin/admin/dashboard'
+      path: '/admin/dashboard'
+      fullPath: '/admin/dashboard'
+      preLoaderRoute: typeof AdminAdminDashboardRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/admin/credentials': {
+      id: '/_admin/admin/credentials'
+      path: '/admin/credentials'
+      fullPath: '/admin/credentials'
+      preLoaderRoute: typeof AdminAdminCredentialsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/admin/cases': {
+      id: '/_admin/admin/cases'
+      path: '/admin/cases'
+      fullPath: '/admin/cases'
+      preLoaderRoute: typeof AdminAdminCasesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/admin/audit': {
+      id: '/_admin/admin/audit'
+      path: '/admin/audit'
+      fullPath: '/admin/audit'
+      preLoaderRoute: typeof AdminAdminAuditRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_wallet/wallet/credential/$id': {
+      id: '/_wallet/wallet/credential/$id'
+      path: '/credential/$id'
+      fullPath: '/wallet/credential/$id'
+      preLoaderRoute: typeof WalletWalletCredentialIdRouteImport
+      parentRoute: typeof WalletWalletRoute
+    }
+    '/_admin/admin/sessions/$id': {
+      id: '/_admin/admin/sessions/$id'
+      path: '/$id'
+      fullPath: '/admin/sessions/$id'
+      preLoaderRoute: typeof AdminAdminSessionsIdRouteImport
+      parentRoute: typeof AdminAdminSessionsRoute
+    }
   }
 }
 
+interface AdminAdminSessionsRouteChildren {
+  AdminAdminSessionsIdRoute: typeof AdminAdminSessionsIdRoute
+}
+
+const AdminAdminSessionsRouteChildren: AdminAdminSessionsRouteChildren = {
+  AdminAdminSessionsIdRoute: AdminAdminSessionsIdRoute,
+}
+
+const AdminAdminSessionsRouteWithChildren =
+  AdminAdminSessionsRoute._addFileChildren(AdminAdminSessionsRouteChildren)
+
+interface AdminRouteChildren {
+  AdminAdminAuditRoute: typeof AdminAdminAuditRoute
+  AdminAdminCasesRoute: typeof AdminAdminCasesRoute
+  AdminAdminCredentialsRoute: typeof AdminAdminCredentialsRoute
+  AdminAdminDashboardRoute: typeof AdminAdminDashboardRoute
+  AdminAdminSessionsRoute: typeof AdminAdminSessionsRouteWithChildren
+  AdminAdminSettingsRoute: typeof AdminAdminSettingsRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminAdminAuditRoute: AdminAdminAuditRoute,
+  AdminAdminCasesRoute: AdminAdminCasesRoute,
+  AdminAdminCredentialsRoute: AdminAdminCredentialsRoute,
+  AdminAdminDashboardRoute: AdminAdminDashboardRoute,
+  AdminAdminSessionsRoute: AdminAdminSessionsRouteWithChildren,
+  AdminAdminSettingsRoute: AdminAdminSettingsRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
+interface WalletConsentRouteChildren {
+  WalletConsentIdRoute: typeof WalletConsentIdRoute
+  WalletConsentActiveRoute: typeof WalletConsentActiveRoute
+}
+
+const WalletConsentRouteChildren: WalletConsentRouteChildren = {
+  WalletConsentIdRoute: WalletConsentIdRoute,
+  WalletConsentActiveRoute: WalletConsentActiveRoute,
+}
+
+const WalletConsentRouteWithChildren = WalletConsentRoute._addFileChildren(
+  WalletConsentRouteChildren,
+)
+
+interface WalletWalletRouteChildren {
+  WalletWalletCredentialIdRoute: typeof WalletWalletCredentialIdRoute
+}
+
+const WalletWalletRouteChildren: WalletWalletRouteChildren = {
+  WalletWalletCredentialIdRoute: WalletWalletCredentialIdRoute,
+}
+
+const WalletWalletRouteWithChildren = WalletWalletRoute._addFileChildren(
+  WalletWalletRouteChildren,
+)
+
+interface WalletRouteChildren {
+  WalletActivityRoute: typeof WalletActivityRoute
+  WalletConsentRoute: typeof WalletConsentRouteWithChildren
+  WalletHelpRoute: typeof WalletHelpRoute
+  WalletRekycRoute: typeof WalletRekycRoute
+  WalletSettingsRoute: typeof WalletSettingsRoute
+  WalletWalletRoute: typeof WalletWalletRouteWithChildren
+  WalletOnboardingIdentityRoute: typeof WalletOnboardingIdentityRoute
+  WalletOnboardingLivenessRoute: typeof WalletOnboardingLivenessRoute
+  WalletOnboardingReviewRoute: typeof WalletOnboardingReviewRoute
+  WalletOnboardingStartRoute: typeof WalletOnboardingStartRoute
+  WalletOnboardingSuccessRoute: typeof WalletOnboardingSuccessRoute
+}
+
+const WalletRouteChildren: WalletRouteChildren = {
+  WalletActivityRoute: WalletActivityRoute,
+  WalletConsentRoute: WalletConsentRouteWithChildren,
+  WalletHelpRoute: WalletHelpRoute,
+  WalletRekycRoute: WalletRekycRoute,
+  WalletSettingsRoute: WalletSettingsRoute,
+  WalletWalletRoute: WalletWalletRouteWithChildren,
+  WalletOnboardingIdentityRoute: WalletOnboardingIdentityRoute,
+  WalletOnboardingLivenessRoute: WalletOnboardingLivenessRoute,
+  WalletOnboardingReviewRoute: WalletOnboardingReviewRoute,
+  WalletOnboardingStartRoute: WalletOnboardingStartRoute,
+  WalletOnboardingSuccessRoute: WalletOnboardingSuccessRoute,
+}
+
+const WalletRouteWithChildren =
+  WalletRoute._addFileChildren(WalletRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRouteWithChildren,
+  WalletRoute: WalletRouteWithChildren,
+  LoginRoute: LoginRoute,
+  RegisterRoute: RegisterRoute,
+  AdminLoginRoute: AdminLoginRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-  }
-}

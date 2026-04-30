@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "framer-motion";
-import { ScanFace, CheckCircle2 } from "lucide-react";
+import { ScanFace, CheckCircle2, Camera, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { OnboardingProgress } from "@/components/onboarding-progress";
 import { useOnboardingStore } from "@/stores/onboarding-store";
@@ -22,6 +22,10 @@ function OnboardingLiveness() {
   const [phase, setPhase] = useState<"intro" | "running" | "done">("intro");
   const [step, setStep] = useState(0);
   const [progress, setProgress] = useState(0);
+  const [capturedImage, setCapturedImage] = useState<string | null>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const streamRef = useRef<MediaStream | null>(null);
 
   useEffect(() => {
     if (phase !== "running") return;
@@ -35,6 +39,7 @@ function OnboardingLiveness() {
       setStep(s);
       if (p < 1) raf = requestAnimationFrame(tick);
       else {
+        captureImage();
         setPhase("done");
         setLiveness(96);
       }
@@ -42,6 +47,57 @@ function OnboardingLiveness() {
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
   }, [phase, setLiveness]);
+
+  useEffect(() => {
+    if (phase === "running") {
+      startCamera();
+    }
+    return () => stopCamera();
+  }, [phase]);
+
+  const startCamera = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: "user" },
+      });
+      streamRef.current = stream;
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+      }
+    } catch (err) {
+      console.error("Camera access error:", err);
+    }
+  };
+
+  const stopCamera = () => {
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach((track) => track.stop());
+      streamRef.current = null;
+    }
+  };
+
+  const captureImage = () => {
+    if (videoRef.current && canvasRef.current) {
+      const video = videoRef.current;
+      const canvas = canvasRef.current;
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const ctx = canvas.getContext("2d");
+      if (ctx) {
+        ctx.drawImage(video, 0, 0);
+        const dataUrl = canvas.toDataURL("image/png");
+        setCapturedImage(dataUrl);
+      }
+    }
+    stopCamera();
+  };
+
+  const retake = () => {
+    setCapturedImage(null);
+    setPhase("intro");
+    setProgress(0);
+    setStep(0);
+  };
 
   return (
     <div className="pb-12">
@@ -77,32 +133,33 @@ function OnboardingLiveness() {
                 className="transition-[stroke-dashoffset] duration-200"
               />
             </svg>
-            {/* Avatar */}
-            <div
-              className={`relative flex h-44 w-44 items-center justify-center rounded-full bg-gradient-to-br from-muted to-card ${phase === "running" ? "animate-pulse-ring" : ""}`}
-            >
-              <AnimatePresence mode="wait">
-                {phase === "done" ? (
-                  <motion.div
-                    key="done"
-                    initial={{ scale: 0.6, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    className="flex h-20 w-20 items-center justify-center rounded-full bg-success text-success-foreground"
-                  >
-                    <CheckCircle2 className="h-10 w-10" />
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="face"
-                    initial={{ scale: 0.9, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                  >
-                    <ScanFace className="h-16 w-16 text-muted-foreground" />
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
+
+            {/* Camera / Captured Image */}
+            {phase === "done" && capturedImage ? (
+              <img
+                src={capturedImage}
+                alt="Captured"
+                className="h-44 w-44 rounded-full object-cover"
+              />
+            ) : phase === "running" ? (
+              <div className="relative h-44 w-44 overflow-hidden rounded-full">
+                <video
+                  ref={videoRef}
+                  autoPlay
+                  playsInline
+                  muted
+                  className="h-full w-full object-cover"
+                />
+              </div>
+            ) : (
+              <div className="relative flex h-44 w-44 items-center justify-center rounded-full bg-gradient-to-br from-muted to-card">
+                <ScanFace className="h-16 w-16 text-muted-foreground" />
+              </div>
+            )}
           </div>
+
+          {/* Hidden canvas for capture */}
+          <canvas ref={canvasRef} className="hidden" />
 
           <div className="mt-6 h-12 text-center">
             <AnimatePresence mode="wait">
@@ -129,6 +186,7 @@ function OnboardingLiveness() {
                 className="h-12 w-full rounded-full text-base"
                 onClick={() => setPhase("running")}
               >
+                <Camera className="mr-2 h-5 w-5" />
                 Start liveness
               </Button>
             )}
@@ -138,13 +196,38 @@ function OnboardingLiveness() {
               </Button>
             )}
             {phase === "done" && (
-              <Button
-                size="lg"
-                className="h-12 w-full rounded-full text-base"
-                onClick={() => navigate({ to: "/onboarding/review" })}
-              >
-                Continue
-              </Button>
+              <div className="space-y-3">
+                <div className="rounded-lg bg-success/10 p-4 text-center">
+                  <p className="text-sm font-medium text-success">Mock Result: PASSED</p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Liveness Score: 96% | Spoof Check: Passed | Face Match: Verified
+                  </p>
+                </div>
+                {capturedImage && (
+                  <div className="rounded-lg border p-2">
+                    <p className="text-xs text-muted-foreground mb-2">Captured Image Output:</p>
+                    <img src={capturedImage} alt="Captured" className="w-full rounded" />
+                  </div>
+                )}
+                <div className="flex gap-3">
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="h-12 flex-1 rounded-full text-base"
+                    onClick={retake}
+                  >
+                    <RefreshCw className="mr-2 h-4 w-4" />
+                    Retake
+                  </Button>
+                  <Button
+                    size="lg"
+                    className="h-12 flex-1 rounded-full text-base"
+                    onClick={() => navigate({ to: "/onboarding/review" })}
+                  >
+                    Continue
+                  </Button>
+                </div>
+              </div>
             )}
           </div>
         </div>

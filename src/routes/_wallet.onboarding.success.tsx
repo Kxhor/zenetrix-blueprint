@@ -17,7 +17,10 @@ function OnboardingSuccess() {
 
   return (
     <div className="relative overflow-hidden pb-12">
-      <div className="absolute inset-x-0 top-0 h-72 gradient-mesh opacity-70" aria-hidden />
+      <div
+        className="absolute inset-x-0 top-0 h-72 bg-gradient-to-br from-primary/20 via-accent/20 to-primary-glow/20 opacity-70"
+        aria-hidden
+      />
       <div className="relative px-5 pt-10 text-center">
         <motion.div
           initial={{ scale: 0.6, opacity: 0 }}

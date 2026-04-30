@@ -24,7 +24,12 @@ app.get("/", async (c) => {
       .select()
       .from(consentsTable)
       .where(
-        and(eq(consentsTable.userId, auth.userId), status !== "all" ? eq(consentsTable.status, status as "pending" | "active" | "revoked" | "expired") : undefined),
+        and(
+          eq(consentsTable.userId, auth.userId),
+          status !== "all"
+            ? eq(consentsTable.status, status as "pending" | "active" | "revoked" | "expired")
+            : undefined,
+        ),
       );
   }
 
